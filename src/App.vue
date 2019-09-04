@@ -19,54 +19,7 @@
       <v-container fluid>
         <v-row dense>
           <v-col>
-            <v-card class="mb-2">
-              <v-card-title>People</v-card-title>
-              <v-card-text>
-                <v-tabs>
-                  <v-tab>Today</v-tab>
-                  <v-tab>Past</v-tab>
-                  <v-tab>Future</v-tab>
-                  <v-tab>Vacations</v-tab>
-                  <v-tab>Upcoming vacations</v-tab>
-
-                  <v-tab-item>
-                    <v-card flat>
-                      <v-card-text>
-                        today's bdays & work anniversaries
-                      </v-card-text>
-                    </v-card>
-                  </v-tab-item>
-                  <v-tab-item>
-                    <v-card flat>
-                      <v-card-text>
-                        past
-                      </v-card-text>
-                    </v-card>
-                  </v-tab-item>
-                  <v-tab-item>
-                    <v-card flat>
-                      <v-card-text>
-                        future
-                      </v-card-text>
-                    </v-card>
-                  </v-tab-item>
-                  <v-tab-item>
-                    <v-card flat>
-                      <v-card-text>
-                        vacations
-                      </v-card-text>
-                    </v-card>
-                  </v-tab-item>
-                  <v-tab-item>
-                    <v-card flat>
-                      <v-card-text>
-                        upcoming vacations
-                      </v-card-text>
-                    </v-card>
-                  </v-tab-item>
-                </v-tabs>
-              </v-card-text>
-            </v-card>
+            <people-card :todayEvents="todayEvents"></people-card>
             <v-card>
               <v-card-title>Blog</v-card-title>
             </v-card>
@@ -94,14 +47,29 @@
 </template>
 
 <script>
+import axios from 'axios';
+
+import PeopleCard from './components/PeopleCard';
 
 export default {
   name: 'App',
   components: {
-    //
+    PeopleCard,
   },
   data: () => ({
-    //
+    todayEvents: [],
   }),
+  mounted() {
+    document.cookie = "crowd.token_key=1qEdMUF9RyKRPjJGZOqegw00";
+    axios.get('/api/today').then(({ data }) => (
+      this.todayEvents = data.map((item) => ({
+        type: item.type,
+        person: {
+          name: item.user,
+          avatar: item.person.avatar,
+        },
+      }))
+    ))
+  },
 };
 </script>
