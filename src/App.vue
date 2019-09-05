@@ -19,27 +19,27 @@
       <v-container fluid>
         <v-row dense>
           <v-col>
-            <people-card :todayEvents="todayEvents"></people-card>
-            <v-card>
-              <v-card-title>Blog</v-card-title>
-            </v-card>
+            <people-card></people-card>
+<!--            <v-card>-->
+<!--              <v-card-title>Blog</v-card-title>-->
+<!--            </v-card>-->
           </v-col>
 
-          <v-col>
-            <v-card class="mb-2">
-              <v-card-title>Teams/Projects</v-card-title>
-              <v-card-text></v-card-text>
-            </v-card>
-            <v-card>
-              <v-card-title>Wiki feed</v-card-title>
-            </v-card>
-          </v-col>
+<!--          <v-col>-->
+<!--            <v-card class="mb-2">-->
+<!--              <v-card-title>Teams/Projects</v-card-title>-->
+<!--              <v-card-text></v-card-text>-->
+<!--            </v-card>-->
+<!--            <v-card>-->
+<!--              <v-card-title>Wiki feed</v-card-title>-->
+<!--            </v-card>-->
+<!--          </v-col>-->
 
-          <v-col>
-            <v-card>
-              <v-card-title>Quacks</v-card-title>
-            </v-card>
-          </v-col>
+<!--          <v-col>-->
+<!--            <v-card>-->
+<!--              <v-card-title>Quacks</v-card-title>-->
+<!--            </v-card>-->
+<!--          </v-col>-->
         </v-row>
       </v-container>
     </v-content>
@@ -47,8 +47,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 import PeopleCard from './components/PeopleCard';
 
 export default {
@@ -57,19 +55,10 @@ export default {
     PeopleCard,
   },
   data: () => ({
-    todayEvents: [],
+    //
   }),
   mounted() {
     document.cookie = "crowd.token_key=1qEdMUF9RyKRPjJGZOqegw00";
-    axios.get('/api/today').then(({ data }) => (
-      this.todayEvents = data.map((item) => ({
-        type: item.type,
-        person: {
-          name: item.user,
-          avatar: item.person.avatar,
-        },
-      }))
-    ))
   },
 };
 </script>

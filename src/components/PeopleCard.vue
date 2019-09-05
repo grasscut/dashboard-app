@@ -2,67 +2,127 @@
   <v-card class="mb-2">
     <v-card-title>People</v-card-title>
     <v-card-text>
-      <v-tabs>
-        <v-tab>Today</v-tab>
-        <v-tab>Past</v-tab>
-        <v-tab>Future</v-tab>
-        <v-tab>Vacations</v-tab>
-        <v-tab>Upcoming vacations</v-tab>
+      <!-- Type filters -->
+      <v-chip-group multiple>
+        <v-chip selected="selectedTypes.includes(type)" v-for="type in types" :key="type" @click="changeFilter(type)">
+          {{ type }}
+        </v-chip>
+      </v-chip-group>
+      <!-- Future events -->
+      <template v-for="(events, date) in futureEvents">
+        <div :key="date">
+          <v-subheader>{{ date }}</v-subheader>
+          <template v-for="event in events">
+            <v-avatar :key="event.type + '.' + event.person.name" v-if="selectedTypes.includes(event.type)">
+              <img
+                :src="event.person.avatar"
+                alt="event.person.name"
+              >
+            </v-avatar>
+          </template>
+        </div>
+      </template>
 
-        <v-tab-item>
-          <v-card flat>
-            <v-card-text>
-              <template v-for="item in todayEvents">
-                <v-avatar :key="item.type + '.' + item.person.name">
-                  <img
-                      :src="'https://intra.proekspert.ee/' + item.person.avatar"
-                      alt="item.person.name"
-                  >
-                </v-avatar>
-              </template>
-            </v-card-text>
-          </v-card>
-        </v-tab-item>
-        <v-tab-item>
-          <v-card flat>
-            <v-card-text>
-              past
-            </v-card-text>
-          </v-card>
-        </v-tab-item>
-        <v-tab-item>
-          <v-card flat>
-            <v-card-text>
-              future
-            </v-card-text>
-          </v-card>
-        </v-tab-item>
-        <v-tab-item>
-          <v-card flat>
-            <v-card-text>
-              vacations
-            </v-card-text>
-          </v-card>
-        </v-tab-item>
-        <v-tab-item>
-          <v-card flat>
-            <v-card-text>
-              upcoming vacations
-            </v-card-text>
-          </v-card>
-        </v-tab-item>
-      </v-tabs>
+      <!-- Today's events -->
+      <v-subheader>Today</v-subheader>
+      <template v-for="event in todayEvents">
+        <v-avatar :key="event.type + '.' + event.person.name" v-if="selectedTypes.includes(event.type)">
+          <img
+            :src="'https://intra.proekspert.ee/' + event.person.avatar"
+            alt="event.person.name"
+          >
+        </v-avatar>
+      </template>
+
+      <!-- Past events -->
+      <template v-for="(events, date) in pastEvents">
+        <div :key="date">
+          <v-subheader>{{ date }}</v-subheader>
+          <template v-for="event in events">
+            <v-avatar :key="event.type + '.' + event.person.name" v-if="selectedTypes.includes(event.type)">
+              <img
+                :src="event.person.avatar"
+                alt="event.person.name"
+              >
+            </v-avatar>
+          </template>
+        </div>
+      </template>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
-  export default {
-    props: {
-      todayEvents: {
-        type: Array,
-        default: [],
-      },
-    },
-  };
+import axios from 'axios';
+
+const groupBy = function(xs, key) {
+  return xs.reduce(function(rv, x) {
+    (rv[x[key]] = rv[x[key]] || []).push(x);
+    return rv;
+  }, {});
+};
+
+export default {
+  data: () => ({
+    types: ['birthday', 'workbirthday', 'kudos'],
+    selectedTypes: ['birthday', 'workbirthday', 'kudos'],
+    todayEvents: [],
+    pastEvents: [],
+    futureEvents: [],
+  }),
+  methods: {
+    changeFilter: function(type) {
+      if (this.selectedTypes.includes(type)) {
+        this.selectedTypes = this.selectedTypes.filter((item) => item !== type);
+      } else {
+        this.selectedTypes.push(type);
+      }
+    }
+  },
+  mounted() {
+    axios.get('/api/today').then(({ data }) => (
+      this.todayEvents = data.map((item) => ({
+        type: item.type,
+        person: {
+          name: item.user,
+          avatar: item.person.avatar,
+        },
+      }))
+    ));
+    axios.get('/api/people?type=BIRTHDAY&type=WORKBIRTHDAY&type=STARTDATE&type=KUDOS').then(({ data }) => {
+      const events = data.groups.map((item) => {
+        const { type, items, user: name, avatar } = item;
+        const date = new Date(items[0].modifiedAt).toLocaleDateString();
+
+        return {
+          date,
+          type,
+          person: {
+            name,
+            avatar,
+          },
+        };
+      });
+
+      this.pastEvents = groupBy(events, 'date');
+    });
+    axios.get('/api/people?type=BIRTHDAY&type=WORKBIRTHDAY&type=STARTDATE&type=KUDOS&future=true').then(({ data }) => {
+      const events = data.groups.map((item) => {
+        const { type, items, user: name, avatar } = item;
+        const date = new Date(items[0].modifiedAt).toLocaleDateString();
+
+        return {
+          date,
+          type,
+          person: {
+            name,
+            avatar,
+          },
+        };
+      });
+
+      this.futureEvents = groupBy(events, 'date');
+    });
+  },
+};
 </script>
