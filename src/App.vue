@@ -25,15 +25,15 @@
 <!--            </v-card>-->
           </v-col>
 
-<!--          <v-col>-->
-<!--            <v-card class="mb-2">-->
-<!--              <v-card-title>Teams/Projects</v-card-title>-->
-<!--              <v-card-text></v-card-text>-->
-<!--            </v-card>-->
-<!--            <v-card>-->
-<!--              <v-card-title>Wiki feed</v-card-title>-->
-<!--            </v-card>-->
-<!--          </v-col>-->
+          <v-col>
+            <v-card class="mb-2">
+              <v-card-title>Teams/Projects</v-card-title>
+              <v-card-text></v-card-text>
+            </v-card>
+            <v-card>
+              <v-card-title>Wiki feed</v-card-title>
+            </v-card>
+          </v-col>
 
 <!--          <v-col>-->
 <!--            <v-card>-->
