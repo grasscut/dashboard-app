@@ -3,9 +3,11 @@
     <v-card-title>People</v-card-title>
     <v-card-text>
       <!-- Type filters -->
+      <v-divider class="mt-2"></v-divider>
       <v-chip-group multiple>
-        <v-chip selected="selectedTypes.includes(type)" v-for="type in types" :key="type" @click="changeFilter(type)">
+        <v-chip v-for="type in types" :key="type" @click="changeFilter(type)" :color="getEventColor(type)" text-color="white">
           {{ type }}
+          <v-icon right>{{ getEventIcon(type) }}</v-icon>
         </v-chip>
       </v-chip-group>
       <v-divider class="mb-2"></v-divider>
@@ -28,8 +30,8 @@
                       </template>
                       <v-avatar>
                         <img
-                                :src="event.person.avatar"
-                                :alt="event.person.name"
+                          :src="event.person.avatar"
+                          :alt="event.person.name"
                         >
                       </v-avatar>
                     </v-badge>
@@ -64,21 +66,24 @@
           <div :key="date">
             <v-subheader class="d-block text-center">{{ new Date(date).toLocaleDateString() }}</v-subheader>
             <v-card flat>
-              <v-card-text>
+              <v-card-text class="d-flex">
                 <template v-for="event in events">
-                  <v-badge v-if="selectedTypes.includes(event.type)" :key="event.type + '.' + event.person.name" class="mr-4" :color="getEventColor(event.type)" right bottom overlap>
-                    <template v-slot:badge>
-                      <v-icon dark>
-                        {{getEventIcon(event.type)}}
-                      </v-icon>
-                    </template>
-                    <v-avatar>
-                      <img
-                        :src="event.person.avatar"
-                        :alt="event.person.name"
-                      >
-                    </v-avatar>
-                  </v-badge>
+                  <div :key="event.type + '.' + event.person.name" class="mr-6">
+                    <v-badge v-if="selectedTypes.includes(event.type)" :color="getEventColor(event.type)" right bottom overlap>
+                      <template v-slot:badge>
+                        <v-icon dark>
+                          {{getEventIcon(event.type)}}
+                        </v-icon>
+                      </template>
+                      <v-avatar>
+                        <img
+                          :src="event.person.avatar"
+                          :alt="event.person.name"
+                        >
+                      </v-avatar>
+                    </v-badge>
+                    <div class="mt-1 text-center">{{ event.person.name.split(' ')[0] }}</div>
+                  </div>
                 </template>
               </v-card-text>
             </v-card>
@@ -107,16 +112,6 @@ export default {
     pastEvents: [],
     futureEvents: [],
   }),
-  computed: {
-    filteredEvents: () => {
-      return
-    },
-  },
-  watch: {
-    selectedTypes: function() {
-      debugger
-    },
-  },
   methods: {
     changeFilter: function(type) {
       if (this.selectedTypes.includes(type)) {
@@ -209,9 +204,23 @@ export default {
 </script>
 
 <style lang="scss">
+  .v-slide-group__prev {
+    display: none !important;
+  }
+
   .v-badge__badge {
     .v-icon {
       font-size: 14px !important;
+    }
+  }
+
+  .v-chip {
+    &.white--text .v-chip__content {
+      color: white !important;
+    }
+
+    &--active {
+      opacity: .5;
     }
   }
 
