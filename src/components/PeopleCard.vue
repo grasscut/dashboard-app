@@ -1,6 +1,8 @@
 <template>
   <v-card class="mb-2">
-    <v-card-title>People</v-card-title>
+    <v-card-title>
+      <h2>People</h2>
+    </v-card-title>
     <v-card-text>
       <!-- Type filters -->
       <v-divider class="mt-2"></v-divider>
@@ -204,6 +206,10 @@ export default {
 </script>
 
 <style lang="scss">
+  .v-card {
+    padding: 12px 20px;
+  }
+
   .v-slide-group__prev {
     display: none !important;
   }
