@@ -14,77 +14,32 @@
       </v-chip-group>
       <v-divider class="mb-2"></v-divider>
 
-      <div style="max-height: 400px; overflow-y: auto;" id="eventsContainer">
-        <v-chip id="scrollToToday" @click="scrollToToday">Scroll to today</v-chip>
-        <!-- Future events -->
-        <template v-for="(events, date) in futureEvents">
+      <!-- Events -->
+      <v-chip id="scrollToToday" @click="scrollToToday">Scroll to today</v-chip>
+      <div style="max-height: 400px; overflow-y: auto; padding-top: 32px;" id="eventsContainer">
+        <template v-for="(items, date) in filteredEvents">
           <div :key="date">
-            <v-subheader class="d-block text-center">{{ new Date(date).toLocaleDateString() }}</v-subheader>
-            <v-card flat>
+            <v-subheader v-if="new Date().toDateString() === new Date(date).toDateString()" id="today" class="d-block text-center subtitle-2 red--text">Today</v-subheader>
+            <v-subheader v-else class="d-block text-center">{{ new Date(date).toLocaleDateString() }}</v-subheader>
+            <v-card flat class="pt-0">
               <v-card-text class="d-flex">
-                <template v-for="event in events">
-                  <div :key="event.type + '.' + event.person.name" class="mr-6">
-                    <v-badge v-if="selectedTypes.includes(event.type)" :color="getEventColor(event.type)" right bottom overlap>
+                <template v-for="item in items">
+                  <span v-if="item.type === 'noEventsToday'" :key="item.date + '.' + 'noEvents'" v-show="items.length === 1">Today is just a normal day.</span>
+                  <div v-else :key="item.type + '.' + item.person.name" class="mr-6">
+                    <v-badge v-if="selectedTypes.includes(item.type)" :color="getEventColor(item.type)" right bottom overlap>
                       <template v-slot:badge>
                         <v-icon dark>
-                          {{getEventIcon(event.type)}}
+                          {{getEventIcon(item.type)}}
                         </v-icon>
                       </template>
                       <v-avatar>
                         <img
-                          :src="event.person.avatar"
-                          :alt="event.person.name"
+                          :src="item.person.avatar"
+                          :alt="item.person.name"
                         >
                       </v-avatar>
                     </v-badge>
-                    <div class="mt-1 text-center">{{ event.person.name.split(' ')[0] }}</div>
-                  </div>
-                </template>
-              </v-card-text>
-            </v-card>
-          </div>
-        </template>
-
-        <!-- Today's events -->
-        <v-subheader ref="today" class="d-block text-center subtitle-2 red--text">Today</v-subheader>
-        <v-card flat>
-          <v-card-text>
-            <template v-for="event in todayEvents">
-              <v-avatar :key="event.type + '.' + event.person.name" v-if="selectedTypes.includes(event.type)">
-                <img
-                  :src="event.person.avatar"
-                  alt="event.person.name"
-                >
-              </v-avatar>
-            </template>
-            <template v-if="todayEvents.length === 0">
-              <span>Today is just a normal day.</span>
-            </template>
-          </v-card-text>
-        </v-card>
-
-        <!-- Past events -->
-        <template v-for="(events, date) in pastEvents">
-          <div :key="date">
-            <v-subheader class="d-block text-center">{{ new Date(date).toLocaleDateString() }}</v-subheader>
-            <v-card flat>
-              <v-card-text class="d-flex">
-                <template v-for="event in events">
-                  <div :key="event.type + '.' + event.person.name" class="mr-6">
-                    <v-badge v-if="selectedTypes.includes(event.type)" :color="getEventColor(event.type)" right bottom overlap>
-                      <template v-slot:badge>
-                        <v-icon dark>
-                          {{getEventIcon(event.type)}}
-                        </v-icon>
-                      </template>
-                      <v-avatar>
-                        <img
-                          :src="event.person.avatar"
-                          :alt="event.person.name"
-                        >
-                      </v-avatar>
-                    </v-badge>
-                    <div class="mt-1 text-center">{{ event.person.name.split(' ')[0] }}</div>
+                    <div class="mt-1 text-center">{{ item.person.name.split(' ')[0] }}</div>
                   </div>
                 </template>
               </v-card-text>
@@ -108,12 +63,24 @@ const groupBy = function(xs, key) {
 
 export default {
   data: () => ({
-    types: ['birthday', 'workbirthday', 'kudos'],
-    selectedTypes: ['birthday', 'workbirthday', 'kudos'],
-    todayEvents: [],
-    pastEvents: [],
-    futureEvents: [],
+    types: ['birthday', 'workbirthday', 'kudos', 'startdate'],
+    selectedTypes: ['birthday', 'workbirthday', 'kudos', 'startdate'],
+    events: [],
   }),
+  computed: {
+    filteredEvents: function () {
+      const filteredEvents = this.events.filter((event) => (
+        this.selectedTypes.includes(event.type) || event.type === 'noEventsToday'
+      ));
+      const groupedEvents = groupBy(filteredEvents, 'date');
+      const orderedEvents = {};
+      Object.keys(groupedEvents).sort().reverse().forEach(function(key) {
+        orderedEvents[key] = groupedEvents[key];
+      });
+
+      return orderedEvents;
+    },
+  },
   methods: {
     changeFilter: function(type) {
       if (this.selectedTypes.includes(type)) {
@@ -132,6 +99,9 @@ export default {
       if (type === 'kudos') {
         return 'green';
       }
+      if (type === 'startdate') {
+        return 'orange';
+      }
     },
     getEventIcon: function (type) {
       if (type === 'birthday') {
@@ -143,42 +113,21 @@ export default {
       if (type === 'kudos') {
         return 'mdi-thumb-up';
       }
+      if (type === 'startdate') {
+        return 'mdi-calendar';
+      }
     },
     scrollToToday: function() {
-      this.$vuetify.goTo(this.$refs.today, { container: '#eventsContainer', offset: 250});
+      if (document.getElementById('today')) {
+        this.$vuetify.goTo('#today', { container: '#eventsContainer', offset: 250});
+      }
     },
   },
   mounted() {
-    axios.get('/api/today').then(({ data }) => (
-      this.todayEvents = data.map((item) => ({
-        type: item.type,
-        person: {
-          name: item.user,
-          avatar: 'https://intra.proekspert.ee/' + item.person.avatar,
-        },
-      }))
-    ));
-    axios.get('/api/people?type=BIRTHDAY&type=WORKBIRTHDAY&type=STARTDATE&type=KUDOS&days=70').then(({ data }) => {
-      const events = data.groups.map((item) => {
-        const { type, items, user: name, avatar } = item;
-        const date = items[0].modifiedAt;
-
-        return {
-          date,
-          type,
-          person: {
-            name,
-            avatar,
-          },
-        };
-      });
-
-      this.pastEvents = groupBy(events, 'date');
-    });
     axios.get('/api/people?type=BIRTHDAY&type=WORKBIRTHDAY&type=STARTDATE&type=KUDOS&days=70&future=true').then(({ data }) => {
-      const events = data.groups.map((item) => {
+      let events = data.groups.map((item) => {
         const { type, items, user: name, avatar } = item;
-        const date = items[0].modifiedAt;
+        const date = items[0].modifiedAt.split('T')[0];
 
         return {
           date,
@@ -189,14 +138,29 @@ export default {
           },
         };
       });
-      const groupedByDate = groupBy(events, 'date');
-      let reversedEvents = {};
+      this.events = events;
 
-      Object.keys(groupedByDate).sort().reverse().forEach(function(key) {
-        reversedEvents[key] = groupedByDate[key];
+      axios.get('/api/people?type=BIRTHDAY&type=WORKBIRTHDAY&type=STARTDATE&type=KUDOS&days=70').then(({ data }) => {
+        const events = data.groups.map((item) => {
+          const { type, items, user: name, avatar } = item;
+          const date = items[0].modifiedAt.split('T')[0];
+
+          return {
+            date,
+            type,
+            person: {
+              name,
+              avatar,
+            },
+          };
+        });
+        const today = new Date();
+        const todayDate =  `${today.getFullYear()}-${('0' + (today.getMonth() + 1)).slice(-2)}-${('0' + today.getDate()).slice(-2)}`;
+
+        events.push({ date: todayDate, type: 'noEventsToday' });
+
+        this.events = [ ...this.events, ...events ];
       });
-
-      this.futureEvents = reversedEvents;
     });
   },
   updated() {
