@@ -16,7 +16,7 @@
 
       <!-- Events -->
       <v-chip id="scrollToToday" @click="scrollToToday">Scroll to today</v-chip>
-      <div style="max-height: 400px; overflow-y: auto; padding-top: 32px; overflow-x: hidden;" id="eventsContainer">
+      <div style="max-height: 400px; overflow-y: auto; padding-top: 32px; overflow-x: hidden;" id="eventsContainer" v-scroll:#eventsContainer="loadMore">
         <template v-for="(items, date) in filteredEvents">
           <div :key="date">
             <v-subheader v-if="new Date().toDateString() === new Date(date).toDateString()" id="today" class="d-block text-center subtitle-2 red--text font-weight-bold">Today</v-subheader>
@@ -25,11 +25,11 @@
               <v-card-text class="d-flex">
                 <template v-for="item in items">
                   <span v-if="item.type === 'noEventsToday'" :key="item.date + '.' + 'noEvents'" v-show="items.length === 1">Today is just a normal day.</span>
-                  <div v-else :key="item.type + '.' + item.person.name" class="mr-6">
+                  <div v-else :key="item.type + item.person.username + item.date" class="mr-6">
                     <v-badge v-if="selectedTypes.includes(item.type)" :color="getEventColor(item.type)" right bottom overlap>
                       <template v-slot:badge>
                         <v-icon dark>
-                          {{getEventIcon(item.type)}}
+                          {{ getEventIcon(item.type) }}
                         </v-icon>
                       </template>
                       <v-avatar>
@@ -66,6 +66,9 @@ export default {
     types: ['birthday', 'workbirthday', 'kudos', 'startdate'],
     selectedTypes: ['birthday', 'workbirthday', 'kudos', 'startdate'],
     events: [],
+    initialScrollToTodayDone: false,
+    nextPageUrl: '',
+    prevPageUrl: '',
   }),
   computed: {
     filteredEvents: function () {
@@ -119,14 +122,60 @@ export default {
     },
     scrollToToday: function() {
       if (document.getElementById('today')) {
-        this.$vuetify.goTo('#today', { container: '#eventsContainer', offset: 250});
+        this.$vuetify.goTo('#today', { container: '#eventsContainer', offset: 250 });
+        this.initialScrollToTodayDone = true;
+      }
+    },
+    loadMore: function(e) {
+      if (e.target.scrollTop === 0) {
+        axios.get(this.nextPageUrl).then(({ data }) => {
+          const events = data.groups.map((item) => {
+            const { type, items, user: name, avatar, username } = item;
+            const date = items[0].modifiedAt.split('T')[0];
+
+            return {
+              date,
+              type,
+              person: {
+                name,
+                avatar,
+                username,
+              },
+            };
+          });
+
+          this.events = [ ...this.events, ...events ];
+          this.nextPageUrl = data.nextPageUrl;
+        });
+      }
+
+      if (e.target.scrollTop === (e.target.scrollHeight - e.target.clientHeight)) {
+        axios.get(this.prevPageUrl).then(({ data }) => {
+          const events = data.groups.map((item) => {
+            const { type, items, user: name, avatar, username } = item;
+            const date = items[0].modifiedAt.split('T')[0];
+
+            return {
+              date,
+              type,
+              person: {
+                name,
+                avatar,
+                username,
+              },
+            };
+          });
+
+          this.events = [ ...this.events, ...events ];
+          this.prevPageUrl = data.nextPageUrl;
+        });
       }
     },
   },
   mounted() {
     axios.get('/api/people?type=BIRTHDAY&type=WORKBIRTHDAY&type=STARTDATE&type=KUDOS&days=70&future=true').then(({ data }) => {
-      let events = data.groups.map((item) => {
-        const { type, items, user: name, avatar } = item;
+      this.events = data.groups.map((item) => {
+        const { type, items, user: name, avatar, username } = item;
         const date = items[0].modifiedAt.split('T')[0];
 
         return {
@@ -135,14 +184,15 @@ export default {
           person: {
             name,
             avatar,
+            username,
           },
         };
       });
-      this.events = events;
+      this.nextPageUrl = data.nextPageUrl;
 
       axios.get('/api/people?type=BIRTHDAY&type=WORKBIRTHDAY&type=STARTDATE&type=KUDOS&days=70').then(({ data }) => {
         const events = data.groups.map((item) => {
-          const { type, items, user: name, avatar } = item;
+          const { type, items, user: name, avatar, username } = item;
           const date = items[0].modifiedAt.split('T')[0];
 
           return {
@@ -151,6 +201,7 @@ export default {
             person: {
               name,
               avatar,
+              username,
             },
           };
         });
@@ -160,11 +211,14 @@ export default {
         events.push({ date: todayDate, type: 'noEventsToday' });
 
         this.events = [ ...this.events, ...events ];
+        this.prevPageUrl = data.nextPageUrl;
       });
     });
   },
   updated() {
-    this.scrollToToday();
+    if (!this.initialScrollToTodayDone) {
+      this.scrollToToday();
+    }
   }
 };
 </script>
