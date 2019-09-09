@@ -16,12 +16,12 @@
 
       <!-- Events -->
       <v-chip id="scrollToToday" @click="scrollToToday">Scroll to today</v-chip>
-      <div style="max-height: 400px; overflow-y: auto; padding-top: 32px;" id="eventsContainer">
+      <div style="max-height: 400px; overflow-y: auto; padding-top: 32px; overflow-x: hidden;" id="eventsContainer">
         <template v-for="(items, date) in filteredEvents">
           <div :key="date">
-            <v-subheader v-if="new Date().toDateString() === new Date(date).toDateString()" id="today" class="d-block text-center subtitle-2 red--text">Today</v-subheader>
+            <v-subheader v-if="new Date().toDateString() === new Date(date).toDateString()" id="today" class="d-block text-center subtitle-2 red--text font-weight-bold">Today</v-subheader>
             <v-subheader v-else class="d-block text-center">{{ new Date(date).toLocaleDateString() }}</v-subheader>
-            <v-card flat class="pt-0">
+            <v-card flat class="pt-0" style="overflow-x: auto;">
               <v-card-text class="d-flex">
                 <template v-for="item in items">
                   <span v-if="item.type === 'noEventsToday'" :key="item.date + '.' + 'noEvents'" v-show="items.length === 1">Today is just a normal day.</span>
@@ -191,6 +191,14 @@ export default {
 
     &--active {
       opacity: .5;
+    }
+  }
+
+  .v-avatar {
+    cursor: pointer;
+
+    &:hover {
+      opacity: .8;
     }
   }
 
