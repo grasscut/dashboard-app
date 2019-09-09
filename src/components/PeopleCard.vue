@@ -146,6 +146,8 @@ export default {
 
           this.events = [ ...this.events, ...events ];
           this.nextPageUrl = data.nextPageUrl;
+          
+          e.target.scrollTop = 400;
         });
       }
 
