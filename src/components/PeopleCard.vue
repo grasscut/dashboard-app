@@ -52,6 +52,25 @@
           </div>
         </template>
       </div>
+
+      <!-- Search -->
+      <v-divider class="mt-2"></v-divider>
+      <v-form ref="form">
+        <v-text-field required placeholder="Employee's name or car plate" v-model="search"></v-text-field>
+        <v-btn outlined @click="submitSearch">Search</v-btn>
+      </v-form>
+
+      <!-- Search result -->
+      <div v-if="!!searchResults" class="mt-6">
+        <template v-for="person in searchResults">
+          <h3>{{ person.name }}</h3>
+          <p>
+            <span>{{ person.position }} @ {{ person.team }}</span><br />
+            <span><v-icon small left>mdi-domain</v-icon>{{ person.office }}</span><br />
+            <span><v-icon small left>mdi-phone-outline</v-icon>{{ person.phone }}</span><br />
+          </p>
+        </template>
+      </div>
     </v-card-text>
   </v-card>
 </template>
@@ -68,6 +87,8 @@ export default {
     initialScrollToTodayDone: false,
     nextPageUrl: '',
     prevPageUrl: '',
+    search: '',
+    searchResults: [],
   }),
   computed: {
     filteredEvents: function () {
@@ -176,6 +197,13 @@ export default {
 
           this.events = [ ...this.events, ...events ];
           this.prevPageUrl = data.nextPageUrl;
+        });
+      }
+    },
+    submitSearch: function() {
+      if (this.$refs.form.validate()) {
+        axios.get(`/api/employees?q=${this.search}`).then(({ data }) => {
+          this.searchResults = data;
         });
       }
     },
