@@ -18,7 +18,7 @@
     <v-content>
       <v-container fluid>
         <v-row dense>
-          <v-col>
+          <v-col md="6" lg="4">
             <people-card></people-card>
 <!--            <v-card>-->
 <!--              <v-card-title>Blog</v-card-title>-->
@@ -58,7 +58,7 @@ export default {
     //
   }),
   mounted() {
-    document.cookie = "crowd.token_key=1qEdMUF9RyKRPjJGZOqegw00";
+    document.cookie = "crowd.token_key=7lpJ1CW08TPPpKBUa5vLGA00";
   },
 };
 </script>
