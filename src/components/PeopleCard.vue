@@ -61,7 +61,7 @@
       </v-form>
 
       <!-- Search result -->
-      <div v-if="!!searchResults" class="mt-6">
+      <div v-if="!!searchResults" class="mt-6" style="max-height: 400px; overflow: auto;">
         <template v-for="person in searchResults">
           <h3>{{ person.name }}</h3>
           <p>
