@@ -6,7 +6,7 @@
     <v-card-text>
       <!-- Type filters -->
       <v-divider class="mt-2"></v-divider>
-      <v-chip-group multiple>
+      <v-chip-group multiple mandatory>
         <v-chip v-for="type in types" :key="type" @click="changeFilter(type)" :color="getEventColor(type)" text-color="white">
           {{ type }}
           <v-icon right>{{ getEventIcon(type) }}</v-icon>
@@ -25,19 +25,24 @@
               <v-card-text class="d-flex">
                 <template v-for="item in items">
                   <span v-if="item.type === 'noEventsToday'" :key="item.date + '.' + 'noEvents'" v-show="items.length === 1">Today is just a normal day.</span>
-                  <div v-else :key="item.type + item.person.username + item.date" class="mr-6">
+                  <div v-else :key="item.type + item.person.username + item.date + item.title" class="mr-6">
                     <v-badge v-if="selectedTypes.includes(item.type)" :color="getEventColor(item.type)" right bottom overlap>
                       <template v-slot:badge>
                         <v-icon dark>
                           {{ getEventIcon(item.type) }}
                         </v-icon>
                       </template>
-                      <v-avatar>
-                        <img
-                          :src="item.person.avatar"
-                          :alt="item.person.name"
-                        >
-                      </v-avatar>
+                      <v-tooltip bottom max-width="400" open-delay="300">
+                        <template v-slot:activator="{ on }">
+                          <v-avatar v-on="on">
+                            <img
+                              :src="item.person.avatar"
+                              :alt="item.person.name"
+                            >
+                          </v-avatar>
+                        </template>
+                        <span v-html="getTooltipText(item)"></span>
+                      </v-tooltip>
                     </v-badge>
                     <div class="mt-1 text-center">{{ item.person.name.split(' ')[0] }}</div>
                   </div>
@@ -59,6 +64,24 @@ const groupBy = function(xs, key) {
     (rv[x[key]] = rv[x[key]] || []).push(x);
     return rv;
   }, {});
+};
+const getOrdinalNumber= function(i) {
+  const j = i % 10;
+  const k = i % 100;
+
+  if (isNaN(parseInt(i))) {
+    return '';
+  }
+  if (j === 1 && k !== 11) {
+    return i + 'st';
+  }
+  if (j === 2 && k !== 12) {
+    return i + 'nd';
+  }
+  if (j === 3 && k !== 13) {
+    return i + 'rd';
+  }
+  return i + 'th';
 };
 
 export default {
@@ -85,6 +108,25 @@ export default {
     },
   },
   methods: {
+    getEvents: function(events) {
+      return events.map((item) => {
+        const { type, items, user: name, avatar, username } = item;
+        const date = items[0].modifiedAt.split('T')[0];
+        const { title, body } = items[0];
+
+        return {
+          date,
+          type,
+          title,
+          body,
+          person: {
+            name,
+            avatar,
+            username,
+          },
+        };
+      });
+    },
     changeFilter: function(type) {
       if (this.selectedTypes.includes(type)) {
         this.selectedTypes = this.selectedTypes.filter((item) => item !== type);
@@ -106,7 +148,7 @@ export default {
         return 'orange';
       }
     },
-    getEventIcon: function (type) {
+    getEventIcon: function(type) {
       if (type === 'birthday') {
         return 'mdi-cupcake';
       }
@@ -120,6 +162,20 @@ export default {
         return 'mdi-calendar';
       }
     },
+    getTooltipText: function(event) {
+      if (event.type === 'birthday') {
+        return `It's <strong>${event.person.name}'s</strong> ${getOrdinalNumber(event.title)} birthday!`
+      }
+      if (event.type === 'workbirthday') {
+        return `It's <strong>${event.person.name}'s</strong> ${getOrdinalNumber(event.title)} work anniversary!`
+      }
+      if (event.type === 'kudos') {
+        return `<strong>${event.person.name}</strong> received a kudos from <strong>${event.title}</strong>:<br/><i>${event.body}</i>`;
+      }
+      if (event.type === 'startdate') {
+        return `<strong>${event.person.name}</strong> joined Proekspert!`;
+      }
+    },
     scrollToToday: function() {
       if (document.getElementById('today')) {
         this.$vuetify.goTo('#today', { container: '#eventsContainer', offset: 250 });
@@ -129,44 +185,18 @@ export default {
     loadMore: function(e) {
       if (e.target.scrollTop === 0) {
         axios.get(this.nextPageUrl).then(({ data }) => {
-          const events = data.groups.map((item) => {
-            const { type, items, user: name, avatar, username } = item;
-            const date = items[0].modifiedAt.split('T')[0];
-
-            return {
-              date,
-              type,
-              person: {
-                name,
-                avatar,
-                username,
-              },
-            };
-          });
+          const events = this.getEvents(data.groups);
 
           this.events = [ ...this.events, ...events ];
           this.nextPageUrl = data.nextPageUrl;
-          
+
           e.target.scrollTop = 400;
         });
       }
 
       if (e.target.scrollTop === (e.target.scrollHeight - e.target.clientHeight)) {
         axios.get(this.prevPageUrl).then(({ data }) => {
-          const events = data.groups.map((item) => {
-            const { type, items, user: name, avatar, username } = item;
-            const date = items[0].modifiedAt.split('T')[0];
-
-            return {
-              date,
-              type,
-              person: {
-                name,
-                avatar,
-                username,
-              },
-            };
-          });
+          const events = this.getEvents(data.groups);
 
           this.events = [ ...this.events, ...events ];
           this.prevPageUrl = data.nextPageUrl;
@@ -176,37 +206,11 @@ export default {
   },
   mounted() {
     axios.get('/api/people?type=BIRTHDAY&type=WORKBIRTHDAY&type=STARTDATE&type=KUDOS&days=70&future=true').then(({ data }) => {
-      this.events = data.groups.map((item) => {
-        const { type, items, user: name, avatar, username } = item;
-        const date = items[0].modifiedAt.split('T')[0];
-
-        return {
-          date,
-          type,
-          person: {
-            name,
-            avatar,
-            username,
-          },
-        };
-      });
+      this.events = this.getEvents(data.groups);
       this.nextPageUrl = data.nextPageUrl;
 
       axios.get('/api/people?type=BIRTHDAY&type=WORKBIRTHDAY&type=STARTDATE&type=KUDOS&days=70').then(({ data }) => {
-        const events = data.groups.map((item) => {
-          const { type, items, user: name, avatar, username } = item;
-          const date = items[0].modifiedAt.split('T')[0];
-
-          return {
-            date,
-            type,
-            person: {
-              name,
-              avatar,
-              username,
-            },
-          };
-        });
+        const events = this.getEvents(data.groups);
         const today = new Date();
         const todayDate =  `${today.getFullYear()}-${('0' + (today.getMonth() + 1)).slice(-2)}-${('0' + today.getDate()).slice(-2)}`;
 
@@ -230,7 +234,7 @@ export default {
     padding: 12px 20px;
   }
 
-  .v-slide-group__prev {
+  .v-slide-group__prev--disabled, .v-slide-group__next--disabled {
     display: none !important;
   }
 

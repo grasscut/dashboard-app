@@ -18,7 +18,7 @@
     <v-content>
       <v-container fluid>
         <v-row dense>
-          <v-col md="4">
+          <v-col md="6" lg="4">
             <people-card></people-card>
 <!--            <v-card>-->
 <!--              <v-card-title>Blog</v-card-title>-->
