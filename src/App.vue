@@ -18,22 +18,13 @@
     <v-content>
       <v-container fluid>
         <v-row dense>
-          <v-col md="6" lg="4">
+          <v-col md="6" xl="4">
             <people-card></people-card>
-<!--            <v-card>-->
-<!--              <v-card-title>Blog</v-card-title>-->
-<!--            </v-card>-->
           </v-col>
 
-<!--          <v-col>-->
-<!--            <v-card class="mb-2">-->
-<!--              <v-card-title>Teams/Projects</v-card-title>-->
-<!--              <v-card-text></v-card-text>-->
-<!--            </v-card>-->
-<!--            <v-card>-->
-<!--              <v-card-title>Wiki feed</v-card-title>-->
-<!--            </v-card>-->
-<!--          </v-col>-->
+            <v-col md="6" xl="4">
+            <news-feed-card></news-feed-card>
+          </v-col>
 
 <!--          <v-col>-->
 <!--            <v-card>-->
@@ -48,11 +39,13 @@
 
 <script>
 import PeopleCard from './components/PeopleCard';
+import NewsFeedCard from './components/NewsFeedCard';
 
 export default {
   name: 'App',
   components: {
     PeopleCard,
+    NewsFeedCard,
   },
   data: () => ({
     //
