@@ -21,7 +21,7 @@
           <div :key="date">
             <v-subheader v-if="new Date().toDateString() === new Date(date).toDateString()" id="today" class="d-block text-center subtitle-2 red--text font-weight-bold">Today</v-subheader>
             <v-subheader v-else class="d-block text-center">{{ new Date(date).toLocaleDateString() }}</v-subheader>
-            <v-card flat class="pt-0" style="overflow-x: auto;">
+            <v-card flat class="pa-0" style="overflow-x: auto;">
               <v-card-text class="d-flex">
                 <template v-for="item in items">
                   <span v-if="item.type === 'noEventsToday'" :key="item.date + '.' + 'noEvents'" v-show="items.length === 1">Today is just a normal day.</span>
@@ -63,15 +63,17 @@
       <!-- Search result -->
       <div v-if="!!searchResults" class="mt-6" style="max-height: 400px; overflow: auto;">
         <template v-for="person in searchResults">
-          <h3>{{ person.name }}</h3>
-          <p>
-            <span>{{ person.position }} @ {{ person.team }}</span><br />
-            <span><v-icon small left>mdi-domain</v-icon>{{ person.office }}</span><br />
-            <span><v-icon small left>mdi-phone-outline</v-icon>{{ person.phone }}</span><br />
-            <span><v-icon small left>mdi-video-outline</v-icon>{{ person.skype }}</span><br />
-            <span><v-icon small left>mdi-cupcake</v-icon>{{ new Date(person.dateOfBirth).toLocaleDateString() }}</span><br />
-            <span><v-icon small left>mdi-star</v-icon>{{ person.workBirthday }}</span><br />
-          </p>
+          <div :key="person.name">
+            <h3>{{ person.name }}</h3>
+            <p>
+              <span>{{ person.position }} @ {{ person.team }}</span><br />
+              <span><v-icon small left>mdi-domain</v-icon>{{ person.office }}</span><br />
+              <span><v-icon small left>mdi-phone-outline</v-icon>{{ person.phone }}</span><br />
+              <span><v-icon small left>mdi-video-outline</v-icon>{{ person.skype }}</span><br />
+              <span><v-icon small left>mdi-cupcake</v-icon>{{ new Date(person.dateOfBirth).toLocaleDateString() }}</span><br />
+              <span><v-icon small left>mdi-star</v-icon>{{ person.workBirthday }}</span><br />
+            </p>
+          </div>
         </template>
       </div>
     </v-card-text>

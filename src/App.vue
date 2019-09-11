@@ -20,6 +20,7 @@
         <v-row dense>
           <v-col md="6" xl="4">
             <people-card></people-card>
+            <services-card></services-card>
           </v-col>
 
             <v-col md="6" xl="4">
@@ -40,12 +41,14 @@
 <script>
 import PeopleCard from './components/PeopleCard';
 import NewsFeedCard from './components/NewsFeedCard';
+import ServicesCard from './components/ServicesCard';
 
 export default {
   name: 'App',
   components: {
     PeopleCard,
     NewsFeedCard,
+    ServicesCard,
   },
   data: () => ({
     //
