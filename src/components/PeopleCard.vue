@@ -56,8 +56,11 @@
       <!-- Search -->
       <v-divider class="mt-2"></v-divider>
       <v-form ref="form">
-        <v-text-field required placeholder="Employee's name or car plate" v-model="search"></v-text-field>
-        <v-btn outlined @click="submitSearch">Search</v-btn>
+        <v-text-field required placeholder="Employee's name or car plate" v-model="search">
+          <template v-slot:append>
+            <v-btn text @click="submitSearch">Search</v-btn>
+          </template>
+        </v-text-field>
       </v-form>
 
       <!-- Search result -->
