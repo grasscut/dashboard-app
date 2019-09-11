@@ -7,7 +7,7 @@
       <v-row>
         <template v-for="item in services">
           <v-col :key="item.title" sm="12" lg="6">
-            <v-card class="ma-2 fill-height" :href="item.url" target="_blank">
+            <v-card class="service ma-2 fill-height" :href="item.url" target="_blank">
               <v-img :src="item.img" height="120px"></v-img>
               <v-card-title>
                 <h6>{{ item.title }}</h6>
@@ -53,3 +53,9 @@ export default {
   }),
 };
 </script>
+
+<style lang="scss">
+  .service:hover {
+    opacity: .8;
+  }
+</style>

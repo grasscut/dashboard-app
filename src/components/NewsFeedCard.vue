@@ -7,7 +7,7 @@
       <v-row>
         <template v-for="item in news">
           <v-col :key="item.items[0].url" sm="12" lg="6">
-            <v-card class="ma-2 fill-height" :href="item.items[0].url" target="_blank">
+            <v-card class="newsItem ma-2 fill-height" :href="item.items[0].url" target="_blank">
               <v-img src="https://isolutions.co.ke/wp-content/uploads/2018/08/post-2.jpg" height="120px"></v-img>
               <v-card-title>
                 <h6 class="d-block text-center">{{ item.items[0].title }}</h6>
@@ -40,5 +40,9 @@ export default {
   a {
     text-decoration: none;
     color: inherit !important;
+  }
+
+  .newsItem:hover {
+    opacity: .8;
   }
 </style>
