@@ -68,6 +68,9 @@
             <span>{{ person.position }} @ {{ person.team }}</span><br />
             <span><v-icon small left>mdi-domain</v-icon>{{ person.office }}</span><br />
             <span><v-icon small left>mdi-phone-outline</v-icon>{{ person.phone }}</span><br />
+            <span><v-icon small left>mdi-video-outline</v-icon>{{ person.skype }}</span><br />
+            <span><v-icon small left>mdi-cupcake</v-icon>{{ new Date(person.dateOfBirth).toLocaleDateString() }}</span><br />
+            <span><v-icon small left>mdi-star</v-icon>{{ person.workBirthday }}</span><br />
           </p>
         </template>
       </div>
