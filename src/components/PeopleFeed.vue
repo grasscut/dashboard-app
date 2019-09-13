@@ -53,7 +53,7 @@
     </div>
 
     <!-- Search -->
-    <v-form ref="form">
+    <v-form ref="form" v-on:submit.prevent="() => $emit('searchSubmitted', search)">
       <v-text-field required placeholder="Employee's name or car plate" v-model="search" class="pt-0">
         <template v-slot:append>
           <v-btn text @click="() => $emit('searchSubmitted', search)">Search</v-btn>
