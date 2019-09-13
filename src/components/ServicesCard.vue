@@ -7,7 +7,7 @@
       <v-row>
         <template v-for="item in services">
           <v-col cols="4" sm="3" lg="2" :class="$vuetify.breakpoint.xs ? 'px-0' : ''">
-            <v-card flat :to="item.url" :class="[$vuetify.breakpoint.xs ? 'px-0' : '', 'service fill-height']">
+            <v-card flat :href="item.url" target="_blank" :class="[$vuetify.breakpoint.xs ? 'px-0' : '', 'service fill-height']">
               <v-img v-bind:src="require(`./../assets/images/${item.img}`)" :height="$vuetify.breakpoint.smAndDown ? 50 : 100" :width="$vuetify.breakpoint.smAndDown ? 50 : 100" style="margin: auto;"></v-img>
               <v-card-title class="subtitle-2 d-block text-center px-0" :style="[$vuetify.breakpoint.smAndDown ? { wordBreak: 'break-word' } : { whiteSpace: 'nowrap' }]">
                 {{ item.title }}

@@ -17,7 +17,8 @@
       </v-tabs>
 
       <!-- Search result -->
-      <div v-if="searchResults.length > 0" style="max-height: 360px; overflow: auto;">
+      <div v-if="searchResults.length > 0 || searchInProgress" class="text-center" style="max-height: 360px; overflow: auto;">
+        <v-progress-circular v-if="searchInProgress" indeterminate></v-progress-circular>
         <template v-for="(person, i) in searchResults">
           <div :key="person.name" class="text-center">
             <v-avatar width="100" height="100" class="mb-2">
@@ -65,6 +66,7 @@ moment.locale('en-gb', {
 export default {
   data: () => ({
     searchResults: [],
+    searchInProgress: false,
   }),
   components: {
     PeopleFeed,
@@ -75,8 +77,11 @@ export default {
       return moment(date);
     },
     submitSearch: function(search) {
+      this.searchResults = [];
+      this.searchInProgress = true;
       axios.get(`/api/employees?q=${search}`).then(({ data }) => {
         this.searchResults = data;
+        this.searchInProgress = false;
       });
     },
   },

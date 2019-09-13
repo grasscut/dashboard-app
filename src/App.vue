@@ -18,17 +18,12 @@
     <v-content>
       <v-container fluid :pa-0="$vuetify.breakpoint.smAndDown">
         <v-row dense>
-          <v-col md="4">
+          <v-col sm="6" md="4">
             <people-card></people-card>
           </v-col>
-          <v-col md="12">
+          <v-col cols="12">
             <services-card></services-card>
           </v-col>
-
-<!--            <v-col md="4">-->
-<!--            <news-feed-card></news-feed-card>-->
-<!--          </v-col>-->
-
 <!--          <v-col>-->
 <!--            <v-card>-->
 <!--              <v-card-title>Quacks</v-card-title>-->
@@ -42,14 +37,12 @@
 
 <script>
 import PeopleCard from './components/PeopleCard';
-import NewsFeedCard from './components/NewsFeedCard';
 import ServicesCard from './components/ServicesCard';
 
 export default {
   name: 'App',
   components: {
     PeopleCard,
-    NewsFeedCard,
     ServicesCard,
   },
   data: () => ({
