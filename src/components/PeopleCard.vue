@@ -6,7 +6,7 @@
     <v-card-text>
       <v-tabs>
         <v-tab>Feed</v-tab>
-        <v-tab>Vacations</v-tab>
+        <v-tab @click="searchResults = []">Vacations</v-tab>
 
         <v-tab-item>
           <people-feed @searchSubmitted="(search) => submitSearch(search)"></people-feed>
