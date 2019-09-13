@@ -16,16 +16,18 @@
 <!--    </v-app-bar>-->
 
     <v-content>
-      <v-container fluid>
+      <v-container fluid :pa-0="$vuetify.breakpoint.smAndDown">
         <v-row dense>
           <v-col md="4">
             <people-card></people-card>
+          </v-col>
+          <v-col md="12">
             <services-card></services-card>
           </v-col>
 
-            <v-col md="4">
-            <news-feed-card></news-feed-card>
-          </v-col>
+<!--            <v-col md="4">-->
+<!--            <news-feed-card></news-feed-card>-->
+<!--          </v-col>-->
 
 <!--          <v-col>-->
 <!--            <v-card>-->
