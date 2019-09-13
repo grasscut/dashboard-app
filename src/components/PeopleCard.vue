@@ -1,12 +1,12 @@
 <template>
-  <v-card class="mb-2">
+  <v-card min-height="488" class="mb-2">
     <v-card-title>
       <h4>People</h4>
     </v-card-title>
     <v-card-text>
       <v-tabs>
         <v-tab>Feed</v-tab>
-        <v-tab>Vacation</v-tab>
+        <v-tab>Vacations</v-tab>
 
         <v-tab-item>
           <people-feed @searchSubmitted="(search) => submitSearch(search)"></people-feed>
@@ -82,7 +82,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-
-</style>

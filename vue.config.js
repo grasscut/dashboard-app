@@ -11,6 +11,10 @@ module.exports = {
         target: 'https://intra.proekspert.ee/wiki',
         secure: true,
       },
+      '/jkeskus/wiki': {
+        target: 'https://intra.proekspert.ee',
+        secure: true,
+      },
     },
   },
 };

@@ -184,7 +184,7 @@
       },
       scrollToToday: function() {
         if (document.getElementById('today')) {
-          this.$vuetify.goTo('#today', { container: '#eventsContainer', offset: 180 });
+          this.$vuetify.goTo('#today', { container: '#eventsContainer', offset: 228 });
         }
       },
       loadMore: function(future) {
@@ -237,7 +237,7 @@
         this.scrollToToday();
       }
       if (this.handleFutureLoad) {
-        this.$vuetify.goTo('#topScrollPosition', { container: '#eventsContainer', offset: 228, duration: 0 });
+        this.$vuetify.goTo('#topScrollPosition', { container: '#eventsContainer', offset: 274, duration: 0 });
         this.handleFutureLoad = false;
       }
     }
