@@ -21,6 +21,9 @@
           <v-col sm="6" md="4">
             <people-card></people-card>
           </v-col>
+          <v-col sm="6" md="4">
+            <wiki-feed-card></wiki-feed-card>
+          </v-col>
           <v-col cols="12">
             <services-card></services-card>
           </v-col>
@@ -37,12 +40,14 @@
 
 <script>
 import PeopleCard from './components/PeopleCard';
+import WikiFeedCard from './components/WikiFeedCard';
 import ServicesCard from './components/ServicesCard';
 
 export default {
   name: 'App',
   components: {
     PeopleCard,
+    WikiFeedCard,
     ServicesCard,
   },
   data: () => ({
