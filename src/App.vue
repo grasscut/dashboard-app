@@ -18,12 +18,12 @@
     <v-content>
       <v-container fluid>
         <v-row dense>
-          <v-col md="6" xl="4">
+          <v-col md="4">
             <people-card></people-card>
             <services-card></services-card>
           </v-col>
 
-            <v-col md="6" xl="4">
+            <v-col md="4">
             <news-feed-card></news-feed-card>
           </v-col>
 
