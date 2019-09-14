@@ -7,7 +7,7 @@
       <v-progress-circular v-if="events.length === 0" indeterminate class="progressSpinner"></v-progress-circular>
       <v-list>
         <v-list-item v-for="event in events">
-          <v-list-item-avatar>
+          <v-list-item-avatar class="align-self-start">
             <v-img :src="event.avatar"></v-img>
           </v-list-item-avatar>
           <v-list-item-content>

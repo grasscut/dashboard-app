@@ -7,7 +7,7 @@
       <v-progress-circular v-if="posts.length === 0" indeterminate class="progressSpinner"></v-progress-circular>
       <v-list>
         <v-list-item v-for="post in posts">
-          <v-list-item-avatar>
+          <v-list-item-avatar class="align-self-start">
             <v-img :src="post.avatar"></v-img>
           </v-list-item-avatar>
           <v-list-item-content>
