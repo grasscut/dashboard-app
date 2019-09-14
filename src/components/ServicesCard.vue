@@ -35,8 +35,8 @@
           <v-divider></v-divider>
 
           <!-- Issues list -->
-          <v-list>
-            <span v-if="issues.length === 0">No requests</span>
+          <v-list style="height: 300px; overflow: auto;">
+            <span v-if="issues.length === 0 && !issuesLoadingProgress">No requests</span>
             <v-list-item v-for="issue in issues">
               <v-list-item-avatar>
                 <v-img :src="issue.avatar"></v-img>
@@ -131,6 +131,7 @@ export default {
     showClosedIssues: false,
     openIssues: [],
     closedIssues: [],
+    issuesLoadingProgress: false,
   }),
   computed: {
     issues: function() {
@@ -144,8 +145,10 @@ export default {
   watch: {
     showClosedIssues: function(val) {
       if (val && this.closedIssues.length === 0) {
+        this.issuesLoadingProgress = true;
         axios.get('/api/jira?projects=ADMIN,FN,JIRA,KUDOS&type=MYCLOSEDISSUE&count=10').then(({ data }) => {
           this.closedIssues = data.groups;
+          this.issuesLoadingProgress = false;
         });
       }
     },
@@ -153,8 +156,10 @@ export default {
   methods: {
     fetchOpenIssues: function() {
       if (this.openIssues.length === 0) {
+        this.issuesLoadingProgress = true;
         axios.get('/api/jira?projects=ADMIN,FN,JIRA,KUDOS&type=MYOPENISSUE&count=10').then(({ data }) => {
           this.openIssues = data.groups;
+          this.issuesLoadingProgress = false;
         });
       }
     },
