@@ -1,30 +1,28 @@
 <template>
-  <v-card class="mb-2" height="488">
-    <div class="fill-height" style="overflow-x: auto;">
-      <v-card-title>
-        <h4>Wiki feed</h4>
-      </v-card-title>
-      <v-card-text>
-        <v-list>
-          <v-list-item v-for="event in events">
-            <v-list-item-avatar>
-              <v-img :src="event.avatar"></v-img>
-            </v-list-item-avatar>
-            <v-list-item-content>
-              <b>{{ event.user }}</b>
-              <span v-for="item in event.items" v-html="getAction(item)" :key="item.modifiedAt">
+  <v-card class="mb-2 d-flex flex-column" height="488">
+    <v-card-title>
+      <h4>Wiki feed</h4>
+    </v-card-title>
+    <v-card-text class="pa-0" style="overflow: auto; margin: 0 16px 16px;">
+      <v-list>
+        <v-list-item v-for="event in events">
+          <v-list-item-avatar>
+            <v-img :src="event.avatar"></v-img>
+          </v-list-item-avatar>
+          <v-list-item-content>
+            <b>{{ event.user }}</b>
+            <span v-for="item in event.items" v-html="getAction(item)" :key="item.modifiedAt">
             </span>
-            </v-list-item-content>
-            <v-list-item-action>
-              <v-list-item-action-text>
-                {{ moment(event.items[0].modifiedAt).calendar() }} {{ moment(event.items[0].modifiedAt).format('HH:MM') }}
-              </v-list-item-action-text>
-            </v-list-item-action>
-          </v-list-item>
-        </v-list>
-        <v-btn v-if="events.length > 0" text width="100%" @click="() => loadMore()" :loading="loadMoreProgress">Load more</v-btn>
-      </v-card-text>
-    </div>
+          </v-list-item-content>
+          <v-list-item-action>
+            <v-list-item-action-text>
+              {{ moment(event.items[0].modifiedAt).calendar() }} {{ moment(event.items[0].modifiedAt).format('HH:MM') }}
+            </v-list-item-action-text>
+          </v-list-item-action>
+        </v-list-item>
+      </v-list>
+      <v-btn v-if="events.length > 0" text width="100%" @click="() => loadMore()" :loading="loadMoreProgress">Load more</v-btn>
+    </v-card-text>
   </v-card>
 </template>
 

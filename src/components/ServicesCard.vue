@@ -4,24 +4,60 @@
       <h4>Services</h4>
     </v-card-title>
     <v-card-text>
-      <v-row>
-        <template v-for="item in services">
-          <v-col cols="4" sm="3" lg="2" :class="$vuetify.breakpoint.xs ? 'px-0' : ''">
-            <v-card flat :href="item.url" target="_blank" :class="[$vuetify.breakpoint.xs ? 'px-0' : '', 'service fill-height']">
-              <v-img v-bind:src="require(`./../assets/images/${item.img}`)" :height="$vuetify.breakpoint.smAndDown ? 50 : 100" :width="$vuetify.breakpoint.smAndDown ? 50 : 100" style="margin: auto;"></v-img>
-              <v-card-title class="subtitle-2 d-block text-center px-0" :style="[$vuetify.breakpoint.smAndDown ? { wordBreak: 'break-word' } : { whiteSpace: 'nowrap' }]">
-                {{ item.title }}
-              </v-card-title>
-              <v-card-text v-if="$vuetify.breakpoint.mdAndUp">{{ item.description }}</v-card-text>
-            </v-card>
-          </v-col>
-        </template>
-      </v-row>
+      <v-tabs>
+        <v-tab>Services</v-tab>
+        <v-tab @click="fetchOpenIssues">My service requests</v-tab>
+
+        <v-tab-item>
+          <v-row>
+            <template v-for="item in services">
+              <v-col cols="4" sm="3" lg="2" :class="$vuetify.breakpoint.xs ? 'px-0' : ''">
+                <v-card flat :href="item.url" target="_blank" :class="[$vuetify.breakpoint.xs ? 'px-0' : '', 'service fill-height']">
+                  <v-img v-bind:src="require(`./../assets/images/${item.img}`)" :height="$vuetify.breakpoint.smAndDown ? 50 : 100" :width="$vuetify.breakpoint.smAndDown ? 50 : 100" style="margin: auto;"></v-img>
+                  <v-card-title class="subtitle-2 d-block text-center px-0" :style="[$vuetify.breakpoint.smAndDown ? { wordBreak: 'break-word' } : { whiteSpace: 'nowrap' }]">
+                    {{ item.title }}
+                  </v-card-title>
+                  <v-card-text v-if="$vuetify.breakpoint.mdAndUp">{{ item.description }}</v-card-text>
+                </v-card>
+              </v-col>
+            </template>
+          </v-row>
+        </v-tab-item>
+        <v-tab-item>
+          <!-- Type filters -->
+          <v-divider class="mt-2"></v-divider>
+          <v-checkbox
+            hide-details
+            v-model="showClosedIssues"
+            label="Show closed issues"
+            class="pa-0 ma-0 my-3"
+          ></v-checkbox>
+          <v-divider></v-divider>
+
+          <!-- Issues list -->
+          <v-list>
+            <span v-if="issues.length === 0">No requests</span>
+            <v-list-item v-for="issue in issues">
+              <v-list-item-avatar>
+                <v-img :src="issue.avatar"></v-img>
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <b>{{ issue.user }}</b>
+                <span>
+                  {{ issue.items[0].issueType }}: <a :href="issue.items[0].url" target="_blank">{{ issue.items[0].body }}</a> ({{ issue.items[0].title }})
+                </span>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-tab-item>
+      </v-tabs>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data: () => ({
     services: [
@@ -92,7 +128,37 @@ export default {
         url: 'https://intra.proekspert.ee/wiki/display/PITS/IT+Support',
       },
     ],
-  })
+    showClosedIssues: false,
+    openIssues: [],
+    closedIssues: [],
+  }),
+  computed: {
+    issues: function() {
+      if (this.showClosedIssues) {
+        return [...this.openIssues, ...this.closedIssues];
+      }
+
+      return this.openIssues;
+    },
+  },
+  watch: {
+    showClosedIssues: function(val) {
+      if (val && this.closedIssues.length === 0) {
+        axios.get('/api/jira?projects=ADMIN,FN,JIRA,KUDOS&type=MYCLOSEDISSUE&count=10').then(({ data }) => {
+          this.closedIssues = data.groups;
+        });
+      }
+    },
+  },
+  methods: {
+    fetchOpenIssues: function() {
+      if (this.openIssues.length === 0) {
+        axios.get('/api/jira?projects=ADMIN,FN,JIRA,KUDOS&type=MYOPENISSUE&count=10').then(({ data }) => {
+          this.openIssues = data.groups;
+        });
+      }
+    },
+  },
 };
 </script>
 
