@@ -19,27 +19,37 @@
       <!-- Search result -->
       <div v-if="searchResults.length > 0 || searchInProgress" class="text-center" style="max-height: 360px; overflow: auto;">
         <v-progress-circular v-if="searchInProgress" indeterminate></v-progress-circular>
-        <template v-for="(person, i) in searchResults">
-          <div :key="person.name" class="text-center">
-            <v-avatar width="100" height="100" class="mb-2">
+        <v-list class="text-left">
+          <v-list-item v-for="(person, i) in searchResults" class="pa-0">
+            <v-list-item-avatar size="100">
               <img :src="'https://intra.proekspert.ee' + person.avatar" style="object-fit: cover;" />
-            </v-avatar>
-            <h2 class="text-center">{{ person.name }}</h2>
-            <span class="d-block text-center">{{ person.position }} @ {{ person.team }}</span>
-            <p class="mt-2 body-1 text-left" style="line-height: 2;">
-             <v-icon left>mdi-domain</v-icon>{{ person.office }}<br />
-              <span v-if="!!person.phone">
-                <v-icon left>mdi-phone-outline</v-icon>{{ person.phone }}<br />
-              </span>
-              <span v-if="!!person.skype">
-                <v-icon left>mdi-skype</v-icon>{{ person.skype }}<br />
-              </span>
-              <v-icon left>mdi-cupcake</v-icon>{{ new Date(person.dateOfBirth).toLocaleDateString() }}<br />
-              <v-icon left>mdi-star</v-icon>{{ person.workBirthday }}
-            </p>
-            <v-divider v-if="(searchResults.length-1) !== i" class="my-2"></v-divider>
-          </div>
-        </template>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <h3>{{ person.name }}</h3>
+              <span>{{ person.position }} @ {{ person.team }}</span>
+              <v-row style="white-space: nowrap; line-height: 1.5;">
+                <v-col :class="$vuetify.breakpoint.xs ? 'pb-0' : ''">
+                  <v-icon small left>mdi-domain</v-icon>{{ person.office }}<br />
+                  <span v-if="!!person.phone">
+                    <v-icon small left>mdi-phone-outline</v-icon>
+                    <a :href="`tel:${person.phone}`">{{ person.phone }}</a><br />
+                  </span>
+                  <span v-if="!!person.skype">
+                    <v-icon small left>mdi-skype</v-icon>
+                    <a :href="`skype:${person.skype}`">{{ person.skype }}</a><br />
+                  </span>
+                </v-col>
+                <v-col :class="$vuetify.breakpoint.xs ? 'pt-1' : ''">
+                  <span v-if="!!person.car">
+                    <v-icon small left>mdi-car</v-icon>{{ person.car }}<br />
+                  </span>
+                  <v-icon small left>mdi-cupcake</v-icon>{{ new Date(person.dateOfBirth).toLocaleDateString() }}<br />
+                  <v-icon small left>mdi-star</v-icon>{{ person.workBirthday }}
+                </v-col>
+              </v-row>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
       </div>
     </v-card-text>
   </v-card>
