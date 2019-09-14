@@ -138,7 +138,6 @@
         } else {
           this.selectedTypes.push(type);
         }
-        this.scrollToToday();
       },
       getEventColor: function(type) {
         if (type === 'birthday') {
@@ -185,11 +184,10 @@
       scrollToToday: function() {
         if (document.getElementById('today')) {
           this.$vuetify.goTo('#today', { container: '#eventsContainer', offset: 228 });
+          this.shouldScrollToToday = false;
         }
       },
       loadMore: function(future) {
-        this.shouldScrollToToday = false;
-
         let api;
         if (future) {
           api = this.nextPageUrl;
@@ -217,11 +215,11 @@
       },
     },
     mounted() {
-      axios.get('/api/people?type=BIRTHDAY&type=WORKBIRTHDAY&type=STARTDATE&type=KUDOS&days=70&future=true').then(({ data }) => {
+      axios.get('/api/people?type=BIRTHDAY&type=WORKBIRTHDAY&type=STARTDATE&type=KUDOS&days=10&future=true').then(({ data }) => {
         this.events = this.getEvents(data.groups);
         this.nextPageUrl = data.nextPageUrl;
 
-        axios.get('/api/people?type=BIRTHDAY&type=WORKBIRTHDAY&type=STARTDATE&type=KUDOS&days=70').then(({ data }) => {
+        axios.get('/api/people?type=BIRTHDAY&type=WORKBIRTHDAY&type=STARTDATE&type=KUDOS&days=10').then(({ data }) => {
           const events = this.getEvents(data.groups);
           const today = moment().format('YYYY-MM-DD');
 
