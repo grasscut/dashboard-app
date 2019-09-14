@@ -13,7 +13,7 @@
     <!-- Events -->
     <v-chip v-if="events.length > 0" id="scrollToToday" @click="scrollToToday" class="mt-2">Scroll to today</v-chip>
     <div id="eventsContainer" style="height: 220px; overflow-y: auto; overflow-x: hidden; padding-top: 40px;">
-      <v-progress-circular v-if="events.length === 0" id="eventsProgress" indeterminate></v-progress-circular>
+      <v-progress-circular v-if="events.length === 0" class="progressSpinner" indeterminate></v-progress-circular>
       <v-btn v-if="events.length > 0" text width="100%" @click="() => loadMore(true)" :loading="futureLoadProgress">Load more</v-btn>
       <template v-for="(items, date) in filteredEvents">
         <div :key="date">
@@ -273,15 +273,6 @@
     &:hover {
       opacity: .8;
     }
-  }
-
-  #eventsProgress {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
   }
 
   #scrollToToday {

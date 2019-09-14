@@ -2,7 +2,7 @@
   <div>
     <div v-html="vacations" style="height: 336px; overflow-y: auto;" class="py-3">
     </div>
-    <v-progress-circular v-if="vacations === ''" id="vacationsProgress" indeterminate></v-progress-circular>
+    <v-progress-circular v-if="vacations === ''" class="progressSpinner" indeterminate></v-progress-circular>
   </div>
 </template>
 
@@ -25,14 +25,3 @@
     },
   };
 </script>
-
-<style lang="scss" scoped>
-  #vacationsProgress {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-  }
-</style>

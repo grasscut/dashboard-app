@@ -24,14 +24,12 @@
           <v-col sm="6" md="4">
             <wiki-feed-card></wiki-feed-card>
           </v-col>
+          <v-col sm="6" md="4">
+            <blog-card></blog-card>
+          </v-col>
           <v-col cols="12">
             <services-card></services-card>
           </v-col>
-<!--          <v-col>-->
-<!--            <v-card>-->
-<!--              <v-card-title>Quacks</v-card-title>-->
-<!--            </v-card>-->
-<!--          </v-col>-->
         </v-row>
       </v-container>
     </v-content>
@@ -41,6 +39,7 @@
 <script>
 import PeopleCard from './components/PeopleCard';
 import WikiFeedCard from './components/WikiFeedCard';
+import BlogCard from './components/BlogCard';
 import ServicesCard from './components/ServicesCard';
 
 export default {
@@ -48,6 +47,7 @@ export default {
   components: {
     PeopleCard,
     WikiFeedCard,
+    BlogCard,
     ServicesCard,
   },
   data: () => ({
@@ -58,3 +58,14 @@ export default {
   },
 };
 </script>
+
+<style>
+  .progressSpinner {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+</style>
