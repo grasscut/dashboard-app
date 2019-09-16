@@ -6,7 +6,7 @@
     <v-card-text class="pa-0" style="overflow: auto; margin: 0 16px 16px;">
       <v-progress-circular v-if="events.length === 0" indeterminate class="progressSpinner"></v-progress-circular>
       <v-list>
-        <v-list-item v-for="event in events" class="pa-0">
+        <v-list-item v-for="event in events">
           <v-list-item-avatar class="align-self-start">
             <v-img :src="event.avatar"></v-img>
           </v-list-item-avatar>
