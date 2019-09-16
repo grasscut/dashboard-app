@@ -5,22 +5,11 @@
     </v-card-title>
     <v-card-text class="pa-0" style="overflow: auto; margin: 0 16px 16px;">
       <v-progress-circular v-if="posts.length === 0" indeterminate class="progressSpinner"></v-progress-circular>
-      <v-list>
-        <v-list-item v-for="post in posts">
-          <v-list-item-avatar class="align-self-start">
-            <v-img :src="post.avatar"></v-img>
-          </v-list-item-avatar>
-          <v-list-item-content>
-            <b>{{ post.user }}</b>
-            <a :href="post.items[0].url" target="_blank">{{ post.items[0].title }}</a>
-          </v-list-item-content>
-          <v-list-item-action>
-            <v-list-item-action-text>
-              {{ moment(post.items[0].modifiedAt).calendar() }}
-            </v-list-item-action-text>
-          </v-list-item-action>
-        </v-list-item>
-      </v-list>
+      <v-row>
+        <v-col v-for="post in posts">
+          <blog-post :post="post" :key="post.title"></blog-post>
+        </v-col>
+      </v-row>
       <v-btn v-if="posts.length > 0" text width="100%" @click="() => loadMore()" :loading="loadMoreProgress">Load more</v-btn>
     </v-card-text>
   </v-card>
@@ -30,6 +19,8 @@
   import moment from '../utils/moment';
   import axios from 'axios';
 
+  import blogPost from './BlogPost'
+
   export default {
     data: () => ({
       posts: [],
@@ -37,7 +28,7 @@
       loadMoreProgress: false,
     }),
     mounted () {
-      axios.get('/api/wiki?blogSpace=dashboard&type=BLOG&count=6').then(({ data }) => {
+      axios.get('/api/wiki?blogSpace=dashboard&type=BLOG&count=3').then(({ data }) => {
         this.posts = data.groups;
         this.nextPageUrl = data.nextPageUrl;
       });
@@ -55,5 +46,8 @@
         });
       },
     },
+    components: {
+      blogPost,
+    }
   };
 </script>

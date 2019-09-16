@@ -54,7 +54,7 @@ export default {
     //
   }),
   mounted() {
-    document.cookie = "crowd.token_key=7lpJ1CW08TPPpKBUa5vLGA00";
+    document.cookie = "crowd.token_key=MkFmd0nkm0us1dgv5WROHQ00";
   },
 };
 </script>
