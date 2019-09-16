@@ -7,7 +7,7 @@
       <v-progress-circular v-if="posts.length === 0" indeterminate class="progressSpinner"></v-progress-circular>
       <v-row>
         <template v-for="post in posts">
-          <v-col sm="12" md="4" lg="4" :key="post.title">
+          <v-col sm="12" md="6" lg="6" :key="post.title" :pa="$vuetify.breakpoint.smAndDown ? 0 : 2">
             <blog-post :post="post"></blog-post>
           </v-col>
         </template>
@@ -30,7 +30,7 @@
       loadMoreProgress: false,
     }),
     mounted () {
-      axios.get('/api/wiki?blogSpace=dashboard&type=BLOG&count=3').then(({ data }) => {
+      axios.get('/api/wiki?blogSpace=dashboard&type=BLOG&count=4').then(({ data }) => {
         this.posts = data.groups;
         this.nextPageUrl = data.nextPageUrl;
       });

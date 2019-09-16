@@ -16,16 +16,25 @@
 <!--    </v-app-bar>-->
 
     <v-content>
-      <v-container fluid :pa-0="$vuetify.breakpoint.smAndDown">
+      <v-container fluid :pa-0="$vuetify.breakpoint.smAndDown" style="max-width: 2000px; margin: 0 auto">
         <v-row dense>
           <v-col sm="6" md="4">
             <people-card></people-card>
           </v-col>
           <v-col sm="6" md="4">
-            <wiki-feed-card></wiki-feed-card>
+            <news-feed-card></news-feed-card>
           </v-col>
           <v-col sm="6" md="4">
             <blog-card></blog-card>
+          </v-col>
+          <v-col sm="6" md="4">
+            <blog-card></blog-card>
+          </v-col>
+          <v-col sm="6" md="4">
+            <blog-card></blog-card>
+          </v-col>
+          <v-col sm="6" md="4">
+            <wiki-feed-card></wiki-feed-card>
           </v-col>
           <v-col cols="12">
             <services-card></services-card>
@@ -41,10 +50,12 @@ import PeopleCard from './components/PeopleCard';
 import WikiFeedCard from './components/WikiFeedCard';
 import BlogCard from './components/BlogCard';
 import ServicesCard from './components/ServicesCard';
+import NewsFeedCard from "./components/NewsFeedCard";
 
 export default {
   name: 'App',
   components: {
+    NewsFeedCard,
     PeopleCard,
     WikiFeedCard,
     BlogCard,

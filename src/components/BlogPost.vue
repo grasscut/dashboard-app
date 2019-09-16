@@ -1,21 +1,26 @@
 <template>
-    <v-card height="300px">
-        <v-img height="20%"
-               width="100%"
+    <v-card height="300px" style="padding: 0px 10px" @click="$router.push(post.url) ">
+        <v-chip v-if="post.items[0].isNew"
+                class="new-badge ma-2"
+                color="green"
+                text-color="white"
+        >
+            New!
+        </v-chip>
+        <v-img contain="true"
+               height="55%"
                class="white--text pa-0"
-                src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                src="../assets/images/placeholder.png"
         ></v-img>
-        <v-avatar>
-            <v-img :src="post.avatar"></v-img>
-        </v-avatar>
-        <v-card-text max-heigth="40%">
-            <a :href="post.items[0].url" target="_blank" style="text-decoration: none">{{ post.items[0].title }}</a>
-            <b>{{ post.user }}</b>
-        </v-card-text>
-        <v-subtitle-2>
+        <v-card-text class="subtitle-1" style="padding: 10px">
+            <b> {{ post.items[0].title }}</b>
+            <br>
+            <v-text class="caption"> {{ post.user ? 'by ' + post.user  : ''}}</v-text>
+            <br>
+        <v-subheader class="caption col-6 blog-date" style="padding: 0px" name="sub2">
             {{ moment(post.items[0].modifiedAt).calendar() }}
-        </v-subtitle-2>
-
+        </v-subheader>
+        </v-card-text>
     </v-card>
 </template>
 
@@ -31,3 +36,10 @@
         }
     }
 </script>
+
+<style scoped>
+    .blog-date {
+        position: absolute;
+        bottom: 0;
+    }
+</style>
