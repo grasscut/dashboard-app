@@ -31,7 +31,7 @@
             <teams-projects-card></teams-projects-card>
           </v-col>
           <v-col sm="6" md="4">
-            <youtube-card></youtube-card>
+            <protube-card></protube-card>
           </v-col>
           <v-col sm="6" md="4">
             <wiki-feed-card></wiki-feed-card>
@@ -52,7 +52,7 @@ import BlogCard from './components/BlogCard';
 import ServicesCard from './components/ServicesCard';
 import NewsFeedCard from "./components/NewsFeedCard";
 import TeamsProjectsCard from "./components/TeamsProjectsCard";
-import YoutubeCard from "./components/YoutubeCard";
+import ProtubeCard from "./components/ProtubeCard";
 
 export default {
   name: 'App',
@@ -63,7 +63,7 @@ export default {
     BlogCard,
     ServicesCard,
     TeamsProjectsCard,
-    YoutubeCard,
+    ProtubeCard,
   },
   data: () => ({
     //
