@@ -7,8 +7,8 @@
             <v-progress-circular v-if="posts.length === 0" indeterminate class="progressSpinner"></v-progress-circular>
             <v-row>
                 <template v-for="post in posts">
-                    <v-col sm="12" md="6" lg="6" :key="post.title" :pa="$vuetify.breakpoint.smAndDown ? 0 : 2">
-                       <v-card :height="200">
+                    <v-col sm="12" md="12" lg="12" xl="6" :key="post.title" :pa-0="$vuetify.breakpoint.smAndDown">
+                       <v-card :height="300">
                            <v-img :src="'https://intra.proekspert.ee/'+ post.image"></v-img>
                            <v-card-text class="card-title">{{ post.title }}
                            </v-card-text>
