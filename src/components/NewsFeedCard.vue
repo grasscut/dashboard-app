@@ -8,7 +8,7 @@
             <v-row>
                 <template v-for="post in posts">
                     <v-col sm="12" md="12" lg="12" xl="6" :key="post.title" :pa-0="$vuetify.breakpoint.smAndDown">
-                       <v-card :height="300" max-width="350px">
+                       <v-card :height="300" max-width="350px" style="margin: 0 auto">
                            <v-img height="200px" :src="'https://intra.proekspert.ee/'+ post.image"></v-img>
                            <v-card-text class="subtitle-1 font-weight-bold">
                                <p class="ellipsis"> {{ post.title }} </p>
@@ -20,7 +20,7 @@
                                         <v-icon>mdi-heart-outline</v-icon> {{ post.likes }}
                                     </span>
                                    <span>
-                                    <v-icon>mdi-comment-outline</v-icon> {{ posts.comments ? posts.comments : 0 }}
+                                    <v-icon>mdi-comment-outline</v-icon> {{ post.comments ? post.comments : 0 }}
                                 </span>
                                </v-subheader>
                            </v-row>

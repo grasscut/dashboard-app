@@ -14,7 +14,6 @@
 <!--        <span class="mr-2">Latest Release</span>-->
 <!--      </v-btn>-->
 <!--    </v-app-bar>-->
-
     <v-content>
       <v-container fluid :pa-0="$vuetify.breakpoint.smAndDown" style="max-width: 2000px; margin: 0 auto">
         <v-row dense>
@@ -53,6 +52,7 @@ import ServicesCard from './components/ServicesCard';
 import NewsFeedCard from "./components/NewsFeedCard";
 import TeamsProjectsCard from "./components/TeamsProjectsCard";
 import ProtubeCard from "./components/ProtubeCard";
+import NavDrawer from "./components/NavDrawer";
 
 export default {
   name: 'App',
@@ -64,6 +64,7 @@ export default {
     ServicesCard,
     TeamsProjectsCard,
     ProtubeCard,
+    NavDrawer
   },
   data: () => ({
     //
@@ -82,5 +83,10 @@ export default {
     left: 0;
     right: 0;
     margin: auto;
+  }
+
+  .v-navigation-drawer {
+    position: absolute;
+    z-index: 2;
   }
 </style>
