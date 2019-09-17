@@ -1,5 +1,5 @@
 <template>
-    <v-card height="300px" style="padding: 0px 10px; " @click="$router.push(post.url)">
+    <v-card height="300px" style="padding: 0px 10px; " @click="$router.push(post.url)" elevation="2">
         <v-chip v-if="post.items[0].isNew"
                 class="new-badge ma-2"
                 color="green"
@@ -39,6 +39,10 @@
     .blog-date {
         position: absolute;
         bottom: 0;
+    }
+
+    .subtitle-1 {
+        color: black !important;
     }
 
     .ellipsis {

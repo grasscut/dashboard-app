@@ -8,13 +8,14 @@
             <v-row>
                 <template v-for="post in posts">
                     <v-col sm="12" md="12" lg="12" xl="6" :key="post.title" :pa-0="$vuetify.breakpoint.smAndDown">
-                       <v-card :height="300">
-                           <v-img :src="'https://intra.proekspert.ee/'+ post.image"></v-img>
-                           <v-card-text class="card-title">{{ post.title }}
+                       <v-card :height="300" max-width="350px">
+                           <v-img height="200px" :src="'https://intra.proekspert.ee/'+ post.image"></v-img>
+                           <v-card-text class="subtitle-1 font-weight-bold">
+                               <p class="ellipsis"> {{ post.title }} </p>
                            </v-card-text>
-                           <v-row cols="12" style="position: absolute; bottom: 0">
-                               <v-text name="sub1" class="justify-start col-5 updated-time caption">{{ post.date }}</v-text>
-                               <v-subheader name="sub2" class="justify-end col-7 justify-space-around" >
+                           <v-row cols="12" style="position: absolute; bottom: 0; width: 100%; padding: 0px 16px;">
+                               <v-text name="sub1" class="justify-start col-6 updated-time caption">{{ post.date }}</v-text>
+                               <v-subheader name="sub2" class="justify-end col-6 justify-space-around" >
                                     <span>
                                         <v-icon>mdi-heart-outline</v-icon> {{ post.likes }}
                                     </span>
@@ -67,10 +68,16 @@
 
 <style scoped>
 
-    .card-title {
-        max-height: 80px;
-        overflow: hidden;
-        display: block;
+    .subtitle-1 {
+        color: black !important;
     }
 
+    .ellipsis {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1; /* number of lines to show N*/
+        line-height: 1.2;       /* fallback X*N */
+    }
 </style>
