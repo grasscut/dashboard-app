@@ -1,5 +1,5 @@
 <template>
-    <v-card height="300px" style="padding: 0px 10px" @click="$router.push(post.url)">
+    <v-card height="300px" style="padding: 0px 10px; max-width: 200px;" @click="$router.push(post.url)">
         <v-chip v-if="post.items[0].isNew"
                 class="new-badge ma-2"
                 color="green"
