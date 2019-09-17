@@ -4,11 +4,25 @@
             <h4>Teams / Projects</h4>
         </v-card-title>
         <v-card-text style="overflow-y: auto; ">
-            <template v-for="event in events">
-                <p><b>{{ event.title }}</b></p>
-                <div>{{ event.summary }}</div>
-                <br>
-            </template>
+            <v-list three-line>
+                <template v-for="(item, index) in events">
+                    <v-subheader
+                            v-if="item.header"
+                            :key="item.header"
+                            v-text="item.header"
+                    ></v-subheader>
+                    
+                    <v-list-item
+                            :key="item.title"
+                            @click=""
+                    >
+                        <v-list-item-content>
+                            <v-list-item-title v-html="item.title"></v-list-item-title>
+                            <v-list-item-subtitle v-html="item.summary"></v-list-item-subtitle>
+                        </v-list-item-content>
+                    </v-list-item>
+                </template>
+            </v-list>
         </v-card-text>
     </v-card>
 </template>
