@@ -49,7 +49,7 @@
         });
       },
       resizeCard () {
-        let windowSize = window.innerWidth;debugger
+        let windowSize = window.innerWidth;
         let elements = document.getElementsByClassName('blog-container');
         if(windowSize < 1200) {
           for( let i in elements){
