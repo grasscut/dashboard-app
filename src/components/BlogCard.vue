@@ -7,7 +7,7 @@
       <v-progress-circular v-if="posts.length === 0" indeterminate class="progressSpinner"></v-progress-circular>
       <v-row>
         <template v-for="post in posts">
-          <v-col sm="12" md="6" lg="6" :key="post.title" :pa="$vuetify.breakpoint.smAndDown ? 0 : 2">
+          <v-col sm="12" md="6" lg="6" :key="post.title" :pa="$vuetify.breakpoint.smAndDown ? 0 : 2" class="blog-container" v-resize="resizeCard">
             <blog-post :post="post"></blog-post>
           </v-col>
         </template>
@@ -28,9 +28,10 @@
       posts: [],
       nextPageUrl: '',
       loadMoreProgress: false,
+      fetchNumber: 6
     }),
     mounted () {
-      axios.get('/api/wiki?blogSpace=dashboard&type=BLOG&count=4').then(({ data }) => {
+      axios.get('/api/wiki?blogSpace=dashboard&type=BLOG&count='+this.fetchNumber).then(({ data }) => {
         this.posts = data.groups;
         this.nextPageUrl = data.nextPageUrl;
       });
@@ -47,6 +48,28 @@
           this.loadMoreProgress = false;
         });
       },
+      resizeCard () {
+        let windowSize = window.innerWidth;debugger
+        let elements = document.getElementsByClassName('blog-container');
+        if(windowSize < 1200) {
+          for( let i in elements){
+            elements[i].classList.remove("col-md-6");
+          }
+        }
+        else if( windowSize > 2000){
+          for( let i in elements){
+            elements[i].classList.remove("col-lg-6");
+            elements[i].classList.add("col-lg-4");
+          }
+        }
+        else {
+          for( let i in elements){
+            elements[i].classList.add("col-md-6");
+            elements[i].classList.remove("col-lg-4");
+            elements[i].classList.add("col-lg-6");
+          }
+        }
+      }
     },
     components: {
       blogPost,

@@ -1,5 +1,5 @@
 <template>
-    <v-card height="300px" style="padding: 0px 10px" @click="$router.push(post.url) ">
+    <v-card height="300px" style="padding: 0px 10px" @click="$router.push(post.url)">
         <v-chip v-if="post.items[0].isNew"
                 class="new-badge ma-2"
                 color="green"
@@ -13,10 +13,8 @@
                 src="../assets/images/placeholder.png"
         ></v-img>
         <v-card-text class="subtitle-1" style="padding: 10px">
-            <b> {{ post.items[0].title }}</b>
-            <br>
+            <p class="ellipsis" style="font-weight: bold"> {{ post.items[0].title }}</p>
             <v-text class="caption"> {{ post.user ? 'by ' + post.user  : ''}}</v-text>
-            <br>
         <v-subheader class="caption col-6 blog-date" style="padding: 0px" name="sub2">
             {{ moment(post.items[0].modifiedAt).calendar() }}
         </v-subheader>
@@ -42,4 +40,18 @@
         position: absolute;
         bottom: 0;
     }
+
+    .ellipsis {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2; /* number of lines to show N*/
+        line-height: 1.4;       /* fallback X*N */
+    }
+
+    .v-card {
+        min-width: 170px;
+    }
+
 </style>
