@@ -3,7 +3,7 @@
     <v-card-title>
       <h4>Blog</h4>
     </v-card-title>
-    <v-card-text class="pa-0" style="overflow-y: auto; margin: 0 16px 16px;">
+    <v-card-text class="pa-0" style="overflow-y: auto; overflow-x: hidden; margin: 0 16px 16px;">
       <v-progress-circular v-if="posts.length === 0" indeterminate class="progressSpinner"></v-progress-circular>
       <v-row>
         <template v-for="post in posts">
