@@ -9,12 +9,13 @@
                 frameborder="0"
                 style="max-width: 650px"
                 allowfullscreen
-                :src="'http://www.youtube.com/embed/'+this.videoId" ></iframe>
+                :src="'http://www.youtube.com/embed/'+this.videoId"
+        />
         <v-row style="overflow-y: auto">
             <template  v-for="video in this.videos">
                 <v-col cols="6" sm="6" md="6" lg="4" xl="4" :key="video.id">
                     <v-card class="d-flex flex-column pa-0"
-                            flat=true
+                            flat
                             @click="videoId = video.id">
                             <v-img class="white--text pa-0"
                                    xl="4"
