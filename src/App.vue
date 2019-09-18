@@ -24,10 +24,10 @@
             <news-feed-card></news-feed-card>
           </v-col>
           <v-col sm="6" md="4">
-            <blog-card></blog-card>
+            <teams-projects-card></teams-projects-card>
           </v-col>
           <v-col sm="6" md="4">
-            <teams-projects-card></teams-projects-card>
+            <blog-card></blog-card>
           </v-col>
           <v-col sm="6" md="4">
             <protube-card></protube-card>
