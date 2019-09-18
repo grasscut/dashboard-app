@@ -7,7 +7,7 @@ module.exports = {
         pathRewrite: {'^/api' : ''},
         secure: true,
       },
-      '/rest/proekspert/1.0': {
+      '/rest': {
         target: 'https://intra.proekspert.ee/wiki',
         secure: true,
       },
