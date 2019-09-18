@@ -5,7 +5,7 @@
         </v-card-title>
         <v-card-text style="overflow-y: auto; overflow-x: hidden;">
             <v-progress-circular v-if="posts.length === 0" indeterminate class="progressSpinner"></v-progress-circular>
-            <v-row>
+            <v-row dense>
                 <template v-for="post in posts">
                     <v-col cols="12" xl="6" :key="post.title" :class="$vuetify.breakpoint.smAndDown ? 'px-0' : ''">
                        <v-card height="270" max-width="350" style="margin: 0 auto;" class="pa-0">

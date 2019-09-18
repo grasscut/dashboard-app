@@ -5,9 +5,9 @@
     </v-card-title>
     <v-card-text style="overflow-y: auto; overflow-x: hidden;">
       <v-progress-circular v-if="posts.length === 0" indeterminate class="progressSpinner"></v-progress-circular>
-      <v-row>
+      <v-row dense>
         <template v-for="post in posts">
-          <v-col sm="12" md="12" lg="6" xl="4" :key="post.title" :class="[$vuetify.breakpoint.smAndDown ? 'px-0' : '', 'blog-container']" >
+          <v-col col="12" lg="6" xl="4" :key="post.title" :class="[$vuetify.breakpoint.smAndDown ? 'px-0' : '', 'blog-container']" >
             <blog-post :post="post"></blog-post>
           </v-col>
         </template>
