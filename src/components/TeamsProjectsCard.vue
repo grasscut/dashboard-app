@@ -5,7 +5,7 @@
         </v-card-title>
         <v-card-text style="overflow-y: auto; ">
             <v-list three-line>
-                <template v-for="(item, index) in events">
+                <template v-for="item in events">
                     <v-subheader
                             v-if="item.header"
                             :key="item.header"
@@ -14,7 +14,8 @@
 
                     <v-list-item
                             :key="item.title"
-                            @click=""
+                            href="/"
+                            target="_blank"
                     >
                         <v-list-item-content>
                             <v-list-item-title v-html="item.title"></v-list-item-title>
