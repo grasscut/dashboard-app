@@ -105,6 +105,6 @@ export default {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2; /* number of lines to show N*/
-    line-height: 1.4;       /* fallback X*N */
+    line-height: 1.4 !important;       /* fallback X*N */
   }
 </style>

@@ -14,7 +14,7 @@
                                <p class="ellipsis"> {{ post.title }} </p>
                            </v-card-text>
                            <v-row cols="12" style="position: absolute; bottom: 0; left:16px; width: 100%;">
-                               <v-text name="sub1" class="justify-start col-7 updated-time caption">{{ moment(post.date).calendar() }}</v-text>
+                               <v-card-text name="sub1" class="justify-start col-7 updated-time caption">{{ moment(post.date).calendar() }}</v-card-text>
                                <v-subheader name="sub2" class="justify-end col-5 justify-space-around" >
                                     <span>
                                         <v-icon>mdi-heart-outline</v-icon> {{ post.likes }}
