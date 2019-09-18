@@ -1,5 +1,5 @@
 <template>
-    <v-card height="300px" style="padding: 0px 10px; " @click="$router.push(post.url)" elevation="2">
+    <v-card height="300px" style="padding: 0px; " :href="post.items[0].url" target="_blank" elevation="2">
         <v-chip v-if="post.items[0].isNew"
                 class="new-badge ma-2"
                 color="green"
@@ -12,10 +12,10 @@
                class="white--text pa-0"
                 src="../assets/images/placeholder.png"
         ></v-img>
-        <v-card-text class="subtitle-1" style="padding: 10px">
+        <v-card-text class="subtitle-1" >
             <p class="ellipsis" style="font-weight: bold"> {{ post.items[0].title }}</p>
             <v-text class="caption"> {{ post.user ? 'by ' + post.user  : ''}}</v-text>
-        <v-subheader class="caption col-6 blog-date" style="padding: 0px" name="sub2">
+        <v-subheader class="caption blog-date" style="padding: 0px;" name="sub2">
             {{ moment(post.items[0].modifiedAt).calendar() }}
         </v-subheader>
         </v-card-text>
