@@ -3,24 +3,28 @@
         <v-card-title>
             <h4>ProTube</h4>
         </v-card-title>
+
         <iframe
-                height="300"
+                height="500"
                 frameborder="0"
                 style="max-width: 650px"
                 allowfullscreen
                 :src="'http://www.youtube.com/embed/'+this.videoId"
-         />
-        <v-row>
+        />
+        <v-row style="overflow-y: auto">
             <template  v-for="video in this.videos">
-                <v-col xl="4" :key="video.id">
-                    <v-card class="d-flex flex-column pa-0" flat @click="videoId = video.id">
-                      <v-img class="white--text pa-0"
-                             xl="4"
-                             :src="'http:///img.youtube.com/vi/'+video.id+'/0.jpg'">
-                      </v-img>
-                      <span class="subtitle-1 ellipsis-2">{{ video.title }}</span>
-                      <v-subheader>{{ video.views }} views</v-subheader>
-                      <v-subheader>{{ moment( video.date).calendar() }}</v-subheader>
+                <v-col cols="6" sm="6" md="6" lg="4" xl="4" :key="video.id">
+                    <v-card class="d-flex flex-column pa-0"
+                            flat
+                            @click="videoId = video.id">
+                            <v-img class="white--text pa-0"
+                                   xl="4"
+                                   style="max-height: 300px"
+                                   :src="'http:///img.youtube.com/vi/'+video.id+'/0.jpg'">
+                            </v-img>
+                            <v-card-text class="subtitle-1 ellipsis-2 font-weight-bold">{{ video.title }}</v-card-text>
+                            <v-card-text class="caption">{{ video.views }} views</v-card-text>
+                            <v-card-text class="caption">{{ moment( video.date).calendar() }}</v-card-text>
                     </v-card>
                 </v-col>
             </template>
