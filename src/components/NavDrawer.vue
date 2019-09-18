@@ -1,13 +1,13 @@
 <template>
-    <v-card height="fill-height">
         <v-navigation-drawer
+                disable-resize-watcher
                 expand-on-hover
         >
             <template v-slot:prepend>
                 <v-list>
                     <v-list-item>
                         <v-list-item-avatar>
-                            <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
+                            <v-img src="https://randomuser.me/api/portraits/women/82.jpg"></v-img>
                         </v-list-item-avatar>
                     </v-list-item>
 
@@ -52,7 +52,6 @@
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
-    </v-card>
 </template>
 <script>
     export default {

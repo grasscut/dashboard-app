@@ -22,9 +22,11 @@
                                    style="max-height: 300px"
                                    :src="'http:///img.youtube.com/vi/'+video.id+'/0.jpg'">
                             </v-img>
-                            <v-card-text class="subtitle-1 ellipsis-2 font-weight-bold">{{ video.title }}</v-card-text>
-                            <v-card-text class="caption">{{ video.views }} views</v-card-text>
-                            <v-card-text class="caption">{{ moment( video.date).calendar() }}</v-card-text>
+                            <v-card-text class="subtitle-1">
+                            <p class="ellipsis-2 font-weight-bold">{{ video.title }}</p>
+                            </v-card-text>
+                            <span class="caption">{{ video.views }} views</span>
+                            <span class="caption">{{ moment( video.date).calendar() }}</span>
                     </v-card>
                 </v-col>
             </template>
