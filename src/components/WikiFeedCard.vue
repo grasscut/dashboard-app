@@ -3,7 +3,7 @@
     <v-card-title>
       <h4>Wiki feed</h4>
     </v-card-title>
-    <v-card-text class="pa-0" style="overflow: auto; margin: 0 16px 16px;">
+    <v-card-text class="pa-0" style="overflow: auto;">
       <v-progress-circular v-if="events.length === 0" indeterminate class="progressSpinner"></v-progress-circular>
       <v-list>
         <v-list-item v-for="event in events">
