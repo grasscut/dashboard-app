@@ -18,7 +18,7 @@
                              xl="4"
                              :src="'http:///img.youtube.com/vi/'+video.id+'/0.jpg'">
                       </v-img>
-                      <v-card-text> class="subtitle-1 ellipsis-2">{{ video.title }}</v-card-text>
+                      <span class="subtitle-1 ellipsis-2">{{ video.title }}</span>
                       <v-subheader>{{ video.views }} views</v-subheader>
                       <v-subheader>{{ moment( video.date).calendar() }}</v-subheader>
                     </v-card>
