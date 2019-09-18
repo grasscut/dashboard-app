@@ -10,7 +10,7 @@
                     <v-col cols="12" xl="6" :key="post.title" :class="$vuetify.breakpoint.smAndDown ? 'px-0' : ''">
                        <v-card height="270" max-width="350" style="margin: 0 auto;" class="pa-0">
                            <v-img height="180" :src="'https://intra.proekspert.ee/'+ post.image"></v-img>
-                           <v-card-text class="subtitle-1 font-weight-bold">
+                           <v-card-text class="subtitle-1 black--text font-weight-bold">
                                <span class="ellipsis" :title="post.title">{{ post.title }}</span>
                            </v-card-text>
                            <v-card-actions>
@@ -66,11 +66,3 @@
         },
     };
 </script>
-
-<style scoped>
-
-    .subtitle-1 {
-        color: black !important;
-    }
-
-</style>

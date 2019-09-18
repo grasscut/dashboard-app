@@ -1,5 +1,5 @@
 <template>
-    <v-card height="300px" style="padding: 0px; " :href="post.items[0].url" target="_blank" elevation="2">
+    <v-card class="pa-0 fill-height d-flex flex-column" :href="post.items[0].url" target="_blank" elevation="2">
         <v-chip v-if="post.items[0].isNew"
                 class="new-badge ma-2"
                 color="green"
@@ -8,17 +8,19 @@
             New!
         </v-chip>
         <v-img contain
-               height="55%"
-               class="white--text pa-0"
+               height="180"
+               class="pa-0"
                 src="../assets/images/placeholder.png"
         ></v-img>
-        <v-card-text class="subtitle-1" >
-            <p class="ellipsis-2" style="font-weight: bold"> {{ post.items[0].title }}</p>
+        <v-card-text class="subtitle-1 black--text" >
+            <span class="ellipsis-2 font-weight-bold"> {{ post.items[0].title }}</span>
             <span class="caption"> {{ post.user ? 'by ' + post.user  : ''}}</span>
-            <v-subheader class="caption blog-date pa-0" name="sub2">
-                {{ moment(post.items[0].modifiedAt).calendar() }}
-            </v-subheader>
         </v-card-text>
+        <v-card-actions>
+            <span class="caption">
+                {{ moment(post.items[0].modifiedAt).calendar() }}
+            </span>
+        </v-card-actions>
     </v-card>
 </template>
 
@@ -34,15 +36,3 @@
         }
     }
 </script>
-
-<style scoped>
-    .blog-date {
-        position: absolute;
-        bottom: 0;
-    }
-
-    .subtitle-1 {
-        color: black !important;
-    }
-
-</style>
