@@ -89,4 +89,22 @@ export default {
     position: absolute;
     z-index: 2;
   }
+
+  .ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1; /* number of lines to show N*/
+    line-height: 1.2;       /* fallback X*N */
+  }
+
+  .ellipsis-2 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* number of lines to show N*/
+    line-height: 1.4;       /* fallback X*N */
+  }
 </style>

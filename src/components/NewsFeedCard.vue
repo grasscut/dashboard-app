@@ -72,12 +72,4 @@
         color: black !important;
     }
 
-    .ellipsis {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 1; /* number of lines to show N*/
-        line-height: 1.2;       /* fallback X*N */
-    }
 </style>

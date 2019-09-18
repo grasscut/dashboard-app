@@ -13,7 +13,7 @@
                 src="../assets/images/placeholder.png"
         ></v-img>
         <v-card-text class="subtitle-1" >
-            <p class="ellipsis" style="font-weight: bold"> {{ post.items[0].title }}</p>
+            <p class="ellipsis-2" style="font-weight: bold"> {{ post.items[0].title }}</p>
             <v-text class="caption"> {{ post.user ? 'by ' + post.user  : ''}}</v-text>
         <v-subheader class="caption blog-date" style="padding: 0px;" name="sub2">
             {{ moment(post.items[0].modifiedAt).calendar() }}
@@ -44,15 +44,5 @@
     .subtitle-1 {
         color: black !important;
     }
-
-    .ellipsis {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2; /* number of lines to show N*/
-        line-height: 1.4;       /* fallback X*N */
-    }
-
 
 </style>
