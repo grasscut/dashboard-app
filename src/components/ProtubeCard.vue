@@ -8,20 +8,19 @@
                 frameborder="0"
                 style="max-width: 650px"
                 allowfullscreen
-                :src="'http://www.youtube.com/embed/'+this.videoId" ></iframe>
+                :src="'http://www.youtube.com/embed/'+this.videoId"
+         />
         <v-row>
             <template  v-for="video in this.videos">
                 <v-col xl="4" :key="video.id">
-                    <v-card class="d-flex flex-column pa-0"
-                            flat="true"
-                            @click="videoId = video.id">
-                            <v-img class="white--text pa-0"
-                                   xl="4"
-                                   :src="'http:///img.youtube.com/vi/'+video.id+'/0.jpg'">
-                            </v-img>
-                            <v-text class="subtitle-1 ellipsis-2">{{ video.title }}</v-text>
-                            <v-subheader>{{ video.views }} views</v-subheader>
-                            <v-subheader>{{ moment( video.date).calendar() }}</v-subheader>
+                    <v-card class="d-flex flex-column pa-0" flat @click="videoId = video.id">
+                      <v-img class="white--text pa-0"
+                             xl="4"
+                             :src="'http:///img.youtube.com/vi/'+video.id+'/0.jpg'">
+                      </v-img>
+                      <v-card-text> class="subtitle-1 ellipsis-2">{{ video.title }}</v-card-text>
+                      <v-subheader>{{ video.views }} views</v-subheader>
+                      <v-subheader>{{ moment( video.date).calendar() }}</v-subheader>
                     </v-card>
                 </v-col>
             </template>

@@ -7,17 +7,17 @@
         >
             New!
         </v-chip>
-        <v-img contain="true"
+        <v-img contain
                height="55%"
                class="white--text pa-0"
                 src="../assets/images/placeholder.png"
         ></v-img>
         <v-card-text class="subtitle-1" >
             <p class="ellipsis-2" style="font-weight: bold"> {{ post.items[0].title }}</p>
-            <v-text class="caption"> {{ post.user ? 'by ' + post.user  : ''}}</v-text>
-        <v-subheader class="caption blog-date" style="padding: 0px;" name="sub2">
-            {{ moment(post.items[0].modifiedAt).calendar() }}
-        </v-subheader>
+            <span class="caption"> {{ post.user ? 'by ' + post.user  : ''}}</span>
+            <v-subheader class="caption blog-date pa-0" name="sub2">
+                {{ moment(post.items[0].modifiedAt).calendar() }}
+            </v-subheader>
         </v-card-text>
     </v-card>
 </template>
