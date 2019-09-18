@@ -5,25 +5,26 @@
         </v-card-title>
         <v-card-text style="overflow-y: auto; overflow-x: hidden;">
             <v-progress-circular v-if="posts.length === 0" indeterminate class="progressSpinner"></v-progress-circular>
-            <v-row>
+            <v-row dense>
                 <template v-for="post in posts">
-                    <v-col sm="12" md="12" lg="12" xl="6" :key="post.title" :pa-0="$vuetify.breakpoint.smAndDown">
-                       <v-card :height="270" max-width="350px" style="margin: 0 auto;" class="pa-0">
-                           <v-img height="180px" :src="'https://intra.proekspert.ee/'+ post.image"></v-img>
-                           <v-card-text class="subtitle-1 font-weight-bold">
-                               <p class="ellipsis"> {{ post.title }} </p>
+                    <v-col cols="12" xl="6" :key="post.title" :class="$vuetify.breakpoint.smAndDown ? 'px-0' : ''">
+                       <v-card height="270" max-width="350" style="margin: 0 auto;" class="pa-0">
+                           <v-img height="180" :src="'https://intra.proekspert.ee/'+ post.image"></v-img>
+                           <v-card-text class="subtitle-1 black--text font-weight-bold">
+                               <span class="ellipsis" :title="post.title">{{ post.title }}</span>
                            </v-card-text>
-                           <v-row cols="12" style="position: absolute; bottom: 0; left:16px; width: 100%;">
-                               <span name="sub1" class="justify-start col-7 updated-time caption">{{ moment(post.date).calendar() }}</span>
-                               <v-subheader name="sub2" class="justify-end col-5 justify-space-around" >
-                                    <span>
-                                        <v-icon>mdi-heart-outline</v-icon> {{ post.likes }}
-                                    </span>
-                                   <span>
-                                        <v-icon>mdi-comment-outline</v-icon> {{ post.comments ? post.comments : 0 }}
-                                    </span>
-                               </v-subheader>
-                           </v-row>
+                           <v-card-actions>
+                             <span class="caption">{{ moment(post.date).calendar() }}</span>
+                             <v-spacer></v-spacer>
+                             <div>
+                                 <span class="mr-1">
+                                  <v-icon>mdi-heart-outline</v-icon> {{ post.likes }}
+                                 </span>
+                                 <span>
+                                  <v-icon>mdi-comment-outline</v-icon> {{ post.comments ? post.comments : 0 }}
+                                 </span>
+                             </div>
+                           </v-card-actions>
                        </v-card>
                     </v-col>
                 </template>
@@ -65,11 +66,3 @@
         },
     };
 </script>
-
-<style scoped>
-
-    .subtitle-1 {
-        color: black !important;
-    }
-
-</style>
