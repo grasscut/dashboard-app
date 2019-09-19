@@ -80,15 +80,41 @@
         name: "AppBar",
         data: () => ({
             show: false,
-            searchResults: []
+            searchResults: [],
+            globalSearch: '',
+            recentSearch: []
         }),
         mounted: function() {
             axios
                 .get('/rest/recentlyviewed/1.0/recent?limit=8')
                 .then(({ data }) => {
+                    this.recentSearch = data;
                     this.searchResults = data;
                 });
         },
+        watch: {
+            globalSearch: function (val) {
+                axios
+                    .get('/rest/quicknav/1/search?query='+val)
+                    .then(({ data }) => {
+                        if(data.contentNameMatches.length > 0) {
+                            let results = [];
+                            const matches = data.contentNameMatches[0];
+                            for(let i in matches){
+                                let res = {
+                                    title: matches[i].name,
+                                    space: matches[i].spaceName
+                                }
+                                results.push(res);
+                            }
+                            this.searchResults = results;
+                        }
+                        else {
+                            this.searchResults = this.recentSearch;
+                        }
+                    });
+            }
+        }
     }
 </script>
 
