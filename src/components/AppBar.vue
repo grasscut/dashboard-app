@@ -18,7 +18,11 @@
                     style="position: relative; bottom: 0; top: 10px; width: 200px; display: flex"
                     v-if="!$vuetify.breakpoint.xs"
             >
-                <v-text-field required placeholder="Search e.g. augmented reality" v-model="globalSearch" class="pa-0" style="font-size: small">
+                <v-text-field required placeholder="Search e.g. augmented reality"
+                              v-model="globalSearch" class="pa-0" style="font-size: small"
+                              @focus="show = true"
+                              @focusout="show = false"
+                >
                 </v-text-field>
             </v-form>
             <v-btn icon @click="() => $emit('globalSearchSubmitted', globalSearch)"
@@ -51,15 +55,51 @@
                 </v-list>
             </v-menu>
         </v-app-bar>
+        <v-card
+                class="mx-auto pa-0 pt-1"
+                max-width="400"
+                tile
+                id="searchMenu"
+                v-if="show"
+        >
+            <template v-for="result in searchResults">
+                <v-list-item two-line :href="'https://intra.proekspert.ee/wiki/'+result.url" target="_blank" :key="result.url">
+                    <v-list-item-content>
+                        <v-list-item-title>{{ result.title }}</v-list-item-title>
+                        <v-list-item-subtitle>{{ result.space }}</v-list-item-subtitle>
+                    </v-list-item-content>
+                </v-list-item>
+            </template>
+        </v-card>
     </div>
 </template>
 
 <script>
+    import axios from 'axios';
     export default {
-        name: "AppBar"
+        name: "AppBar",
+        data: () => ({
+            show: false,
+            searchResults: []
+        }),
+        mounted: function() {
+            axios
+                .get('/rest/recentlyviewed/1.0/recent?limit=8')
+                .then(({ data }) => {
+                    this.searchResults = data;
+                });
+        },
     }
 </script>
 
 <style scoped>
+
+    #searchMenu {
+        position: absolute;
+        z-index: 2;
+        right: 0;
+        top: 50px;
+    }
+
 
 </style>

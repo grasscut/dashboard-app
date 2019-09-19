@@ -68,7 +68,7 @@ export default {
     TeamsProjectsCard,
     ProtubeCard,
     MenuDrawer,
-    AppBar
+    AppBar,
   },
   mounted() {
     document.cookie = "crowd.token_key=MkFmd0nkm0us1dgv5WROHQ00";
@@ -105,7 +105,8 @@ export default {
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2; /* number of lines to show N*/
-    line-height: 1.4 !important;       /* fallback X*N */
+    -webkit-line-clamp: 2;
+    line-height: 1.4 !important;
   }
+
 </style>
