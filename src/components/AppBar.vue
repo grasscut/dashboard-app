@@ -5,10 +5,10 @@
                 dense
                 light
         >
-         <!--   <v-app-bar-nav-icon></v-app-bar-nav-icon>-->
+            <v-app-bar-nav-icon @click="() => $emit('menuClicked')" class="pa-2"></v-app-bar-nav-icon>
 
             <v-toolbar-title>
-                <v-img src="../assets/images/proekspert-logo.png" class="pl-2" style="max-width: 150px"></v-img>
+                <v-img src="../assets/images/proekspert-logo.svg" class="pl-2" style="max-width: 150px"></v-img>
             </v-toolbar-title>
 
             <div class="flex-grow-1"></div>
@@ -20,8 +20,8 @@
             >
                 <v-text-field required placeholder="Search e.g. augmented reality"
                               v-model="globalSearch" class="pa-0" style="font-size: small"
-                              @focus="show = true"
-                              @focusout="show = false"
+                              @focusin="show = true"
+                              @change="show = true"
                 >
                 </v-text-field>
             </v-form>
@@ -61,6 +61,7 @@
                 tile
                 id="searchMenu"
                 v-if="show"
+                @mouseleave="show = false"
         >
             <template v-for="result in searchResults">
                 <v-list-item two-line :href="'https://intra.proekspert.ee/wiki/'+result.url" target="_blank" :key="result.url">

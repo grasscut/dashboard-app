@@ -1,11 +1,11 @@
 <template>
   <div>
-    <v-btn color="primary" small tile fab class="shortcut white--text" @click.stop="show = !show">
+    <!--<v-btn color="primary" small tile fab class="shortcut white&#45;&#45;text" @click.stop="show = !show">
       <v-icon>mdi-format-list-bulleted</v-icon>
-    </v-btn>
+    </v-btn>-->
     <v-navigation-drawer
         app
-        v-model="show"
+        v-model="showMenu"
         temporary
         fixed
         hide-overlay
@@ -133,8 +133,8 @@
   import axios from 'axios';
 
   export default {
+    props: ['showMenu'],
     data: () => ({
-      show: false,
       mySpaces: [],
     }),
     mounted: function() {
@@ -144,6 +144,7 @@
           this.mySpaces = data.results;
         });
     },
+
   };
 </script>
 

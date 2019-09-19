@@ -14,8 +14,8 @@
 <!--        <span class="mr-2">Latest Release</span>-->
 <!--      </v-btn>-->
 <!--    </v-app-bar>-->
-    <app-bar></app-bar>
-    <menu-drawer></menu-drawer>
+    <app-bar @menuClicked="showMenu = !showMenu"></app-bar>
+    <menu-drawer :showMenu="showMenu"></menu-drawer>
     <v-content>
       <v-container fluid :pa-0="$vuetify.breakpoint.smAndDown" style="max-width: 2000px; margin: 0 auto">
         <v-row dense>
@@ -73,6 +73,9 @@ export default {
   mounted() {
     document.cookie = "crowd.token_key=MkFmd0nkm0us1dgv5WROHQ00";
   },
+  data: () => ({
+    showMenu: false,
+  }),
 };
 </script>
 
