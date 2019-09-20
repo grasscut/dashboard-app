@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="app-bar">
         <v-app-bar
                 color="white accent-4"
                 dense
@@ -8,7 +8,7 @@
             <v-app-bar-nav-icon @click="() => $emit('menuClicked')" class="pa-2"></v-app-bar-nav-icon>
 
             <v-toolbar-title>
-                <v-img src="../assets/images/proekspert-logo.svg" class="pl-2" style="max-width: 150px"></v-img>
+                <v-img src="../assets/images/proekspert-logo.svg" class="pl-2" style="max-width: 150px; height: 19px; "></v-img>
             </v-toolbar-title>
 
             <div class="flex-grow-1"></div>
@@ -20,7 +20,7 @@
             >
                 <v-text-field required placeholder="Search e.g. augmented reality"
                               v-model="globalSearch" class="pa-0" style="font-size: small"
-                              @focusin="show = true"
+                              @click="show = !show"
                               @change="show = true"
                 >
                 </v-text-field>
@@ -61,10 +61,9 @@
                 tile
                 id="searchMenu"
                 v-if="show"
-                @mouseleave="show = false"
         >
             <template v-for="result in searchResults">
-                <v-list-item two-line :href="'https://intra.proekspert.ee/wiki/'+result.url" target="_blank" :key="result.url">
+                <v-list-item two-line :href="'https://intra.proekspert.ee/wiki/'+result.url" target="_blank" :key="result.key">
                     <v-list-item-content>
                         <v-list-item-title>{{ result.title }}</v-list-item-title>
                         <v-list-item-subtitle>{{ result.space }}</v-list-item-subtitle>
@@ -95,6 +94,7 @@
         },
         watch: {
             globalSearch: function (val) {
+                this.show = true;
                 axios
                     .get('/rest/quicknav/1/search?query='+val)
                     .then(({ data }) => {
@@ -102,11 +102,16 @@
                             let results = [];
                             const matches = data.contentNameMatches[0];
                             for(let i in matches){
-                                let res = {
-                                    title: matches[i].name,
-                                    space: matches[i].spaceName
+                                let classname = matches[i].className;
+                                if("search-for" !== classname) {
+                                    let res = {
+                                        title: matches[i].name,
+                                        space: matches[i].spaceName,
+                                        key: matches[i].spaceKey,
+                                        url: matches[i].href
+                                    }
+                                    results.push(res);
                                 }
-                                results.push(res);
                             }
                             this.searchResults = results;
                         }
@@ -123,9 +128,13 @@
 
     #searchMenu {
         position: absolute;
-        z-index: 2;
+        z-index: 3;
         right: 0;
         top: 50px;
+    }
+
+    .app-bar {
+        z-index: 8;
     }
 
 

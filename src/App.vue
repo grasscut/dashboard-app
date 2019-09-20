@@ -89,11 +89,6 @@ export default {
     margin: auto;
   }
 
-  .v-navigation-drawer {
-    position: absolute;
-    z-index: 2;
-  }
-
   .ellipsis {
     overflow: hidden;
     text-overflow: ellipsis;

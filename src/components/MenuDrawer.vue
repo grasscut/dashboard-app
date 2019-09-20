@@ -9,6 +9,8 @@
         temporary
         fixed
         hide-overlay
+        stateless
+        class="menu-drawer"
     >
       <v-list dense>
         <v-subheader>MY WORK</v-subheader>
@@ -149,14 +151,13 @@
 </script>
 
 <style scoped>
-  .shortcut {
-    position: fixed;
-    top: 50px;
-    opacity: .6;
-    z-index: 1;
-  }
 
   .v-navigation-drawer--fixed {
     position: fixed !important;
   }
+
+  .menu-drawer {
+    top: 48px !important;
+  }
+
 </style>
