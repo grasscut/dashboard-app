@@ -17,7 +17,7 @@
     <app-bar @menuClicked="showMenu = !showMenu"></app-bar>
     <menu-drawer :showMenu="showMenu"></menu-drawer>
     <v-content>
-      <v-container fluid :pa-0="$vuetify.breakpoint.smAndDown" style="max-width: 2000px; margin: 0 auto">
+      <v-container fluid :pa-0="$vuetify.breakpoint.smAndDown" style="max-width: 2000px; margin: 48px auto 0 auto">
         <v-row dense>
           <v-col sm="6" md="4">
             <people-card></people-card>

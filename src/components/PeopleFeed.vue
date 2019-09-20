@@ -183,7 +183,7 @@
       },
       scrollToToday: function() {
         if (document.getElementById('today')) {
-          this.$vuetify.goTo('#today', { container: '#eventsContainer', offset: 228 });
+          this.$vuetify.goTo('#today', { container: '#eventsContainer', offset: 276 });
           this.shouldScrollToToday = false;
         }
       },
@@ -235,7 +235,7 @@
         this.scrollToToday();
       }
       if (this.handleFutureLoad) {
-        this.$vuetify.goTo('#topScrollPosition', { container: '#eventsContainer', offset: 274, duration: 0 });
+        this.$vuetify.goTo('#topScrollPosition', { container: '#eventsContainer', offset: 322, duration: 0 });
         this.handleFutureLoad = false;
       }
     }

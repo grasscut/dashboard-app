@@ -4,6 +4,7 @@
                 color="white accent-4"
                 dense
                 light
+                fixed
         >
             <v-app-bar-nav-icon @click="() => $emit('menuClicked')" class="pa-2"></v-app-bar-nav-icon>
 
@@ -23,13 +24,13 @@
             >
                 <v-text-field required placeholder="Search e.g. augmented reality"
                               v-model="globalSearch" class="pa-0 pl-1" style="font-size: small"
-                              @click="show = !show"
-                              @change="show = true"
+                              @click="showSearch = !showSearch; showNotifications = false"
+                              @change="showSearch = true"
                 >
                 </v-text-field>
             </v-form>
 
-            <v-btn icon>
+            <v-btn icon @click="getNotifications">
                 <v-badge
                         :bottom="bottom"
                         color="teal"
@@ -72,8 +73,9 @@
                 class="mx-auto pa-0 pt-1"
                 max-width="400"
                 tile
+                fixed
                 id="searchMenu"
-                v-if="show"
+                v-if="showSearch"
         >
             <template v-for="result in searchResults">
                 <v-list-item two-line :href="'https://intra.proekspert.ee/wiki/'+result.url" target="_blank" :key="result.key">
@@ -84,16 +86,41 @@
                 </v-list-item>
             </template>
         </v-card>
+        <v-card
+                class="mx-auto pa-0 pt-1"
+                max-width="400"
+                tile
+                fixed
+                id="notificationMenu"
+                v-if="showNotifications"
+        >
+            <v-card-title class="title" v-if="notificationResults.length > 0">Notifications</v-card-title>
+            <v-card-title class="subtitle-2" v-else>No notifications found</v-card-title>
+            <hr v-if="notificationResults.length !== 0">
+            <template v-for="result in notificationResults">
+                <v-list-item :href="'https://intra.proekspert.ee/wiki/'+result.url" target="_blank" :key="result.key">
+                    <v-list-item-content style="display: flex">
+                        <v-list-item-title class="subtitle-2">{{ result.title }}</v-list-item-title>
+                        <v-list-item-subtitle class="caption">{{ result.updated }}</v-list-item-subtitle>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-divider></v-divider>
+            </template>
+        </v-card>
     </div>
 </template>
 
 <script>
     import axios from 'axios';
+    import moment from '../utils/moment';
+
     export default {
         name: "AppBar",
         data: () => ({
-            show: false,
+            showSearch: false,
+            showNotifications: false,
             searchResults: [],
+            notificationResults: [],
             globalSearch: '',
             recentSearch: [],
             notificationCount: 0,
@@ -115,7 +142,7 @@
         },
         watch: {
             globalSearch: function (val) {
-                this.show = true;
+                this.showSearch = true;
                 axios
                     .get('/rest/quicknav/1/search?query='+val)
                     .then(({ data }) => {
@@ -144,17 +171,45 @@
             notificationCount: function () {
                 this.showBadge = this.notificationCount > 0;
             }
+        },
+        methods: {
+            getNotifications: function () {
+                if(!this.showNotifications){
+                    this.showSearch = false;
+                    axios
+                        .get('/rest/mywork/latest/notification/nested?limit=30')
+                        .then(({ data }) => {
+                            let results = [];
+                            for (let i in data) {
+                                let notification = data[i].notifications[0];
+                                let res = {
+                                    title: notification.title,
+                                    updated: moment(notification.updated).calendar(),
+                                    url: notification.url
+                                }
+                                results.push(res);
+                            }
+                            this.notificationResults = results;
+                        });
+                        this.showNotifications = true;
+                }
+                else this.showNotifications = false;
+            },
+            moment: function (date) {
+                return moment(date);
+            },
         }
     }
 </script>
 
 <style scoped>
 
-    #searchMenu {
-        position: absolute;
+    #searchMenu, #notificationMenu {
+        position: fixed;
         z-index: 3;
         right: 0;
         top: 50px;
+        min-width: 300px;
     }
 
     .app-bar {
