@@ -48,26 +48,26 @@
             </v-btn>
 
 
-            <v-menu
-                    left
-                    bottom
-            >
-                <template v-slot:activator="{ on }">
-                    <v-btn icon v-on="on">
-                        <v-icon>mdi-dots-vertical</v-icon>
-                    </v-btn>
-                </template>
+<!--            <v-menu-->
+<!--                    left-->
+<!--                    bottom-->
+<!--            >-->
+<!--                <template v-slot:activator="{ on }">-->
+<!--                    <v-btn icon v-on="on">-->
+<!--                        <v-icon>mdi-dots-vertical</v-icon>-->
+<!--                    </v-btn>-->
+<!--                </template>-->
 
-                <v-list>
-                    <v-list-item
-                            v-for="n in 5"
-                            :key="n"
-                            @click="() => {}"
-                    >
-                        <v-list-item-title>Option {{ n }}</v-list-item-title>
-                    </v-list-item>
-                </v-list>
-            </v-menu>
+<!--                <v-list>-->
+<!--                    <v-list-item-->
+<!--                            v-for="n in 5"-->
+<!--                            :key="n"-->
+<!--                            @click="() => {}"-->
+<!--                    >-->
+<!--                        <v-list-item-title>Option {{ n }}</v-list-item-title>-->
+<!--                    </v-list-item>-->
+<!--                </v-list>-->
+<!--            </v-menu>-->
         </v-app-bar>
         <v-card
                 class="mx-auto pa-0 pt-1"
@@ -78,7 +78,7 @@
                 v-if="showSearch"
         >
             <template v-for="result in searchResults">
-                <v-list-item two-line :href="'https://intra.proekspert.ee/wiki/'+result.url" target="_blank" :key="result.key">
+                <v-list-item two-line :href="'https://intra.proekspert.ee/'+result.url" target="_blank" :key="result.key">
                     <v-list-item-content>
                         <v-list-item-title>{{ result.title }}</v-list-item-title>
                         <v-list-item-subtitle>{{ result.space }}</v-list-item-subtitle>
