@@ -8,32 +8,45 @@
             <v-app-bar-nav-icon @click="() => $emit('menuClicked')" class="pa-2"></v-app-bar-nav-icon>
 
             <v-toolbar-title>
-                <v-img src="../assets/images/proekspert-logo.svg" class="pl-2" style="max-width: 150px; height: 19px; "></v-img>
+                <a href="/">
+                    <v-img src="../assets/images/proekspert-logo.svg" class="pl-2" style="max-width: 150px; height: 19px; "></v-img>
+                </a>
             </v-toolbar-title>
 
             <div class="flex-grow-1"></div>
 
             <!-- Search -->
+            <v-icon v-if="!$vuetify.breakpoint.xs">mdi-magnify</v-icon>
             <v-form ref="form" v-on:submit.prevent="() => $emit('globalSearchSubmitted', globalSearch)"
                     style="position: relative; bottom: 0; top: 10px; width: 200px; display: flex"
                     v-if="!$vuetify.breakpoint.xs"
             >
                 <v-text-field required placeholder="Search e.g. augmented reality"
-                              v-model="globalSearch" class="pa-0" style="font-size: small"
+                              v-model="globalSearch" class="pa-0 pl-1" style="font-size: small"
                               @click="show = !show"
                               @change="show = true"
                 >
                 </v-text-field>
             </v-form>
-            <v-btn icon @click="() => $emit('globalSearchSubmitted', globalSearch)"
-                   v-if="!$vuetify.breakpoint.xs"
-            >
-                <v-icon>mdi-magnify</v-icon>
-            </v-btn>
 
             <v-btn icon>
-                <v-icon>mdi-bell</v-icon>
+                <v-badge
+                        :bottom="bottom"
+                        color="teal"
+                        :left="left"
+                        overlap
+                        class="align-self-center"
+                        :value=showBadge
+                        style="padding: 3px;"
+                >
+                    <template v-slot:badge>
+                        <span>{{ notificationCount }}</span>
+                    </template>
+                    <v-icon>mdi-bell</v-icon>
+                </v-badge>
             </v-btn>
+
+
             <v-menu
                     left
                     bottom
@@ -82,7 +95,9 @@
             show: false,
             searchResults: [],
             globalSearch: '',
-            recentSearch: []
+            recentSearch: [],
+            notificationCount: 0,
+            showBadge: false
         }),
         mounted: function() {
             axios
@@ -90,6 +105,12 @@
                 .then(({ data }) => {
                     this.recentSearch = data;
                     this.searchResults = data;
+                });
+
+            axios
+                .get('/rest/mywork/latest/status/notification/count')
+                .then((res) => {
+                    this.notificationCount = res.data.count;
                 });
         },
         watch: {
@@ -119,6 +140,9 @@
                             this.searchResults = this.recentSearch;
                         }
                     });
+            },
+            notificationCount: function () {
+                this.showBadge = this.notificationCount > 0;
             }
         }
     }
