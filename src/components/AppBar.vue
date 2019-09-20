@@ -18,7 +18,10 @@
 
             <!-- Search -->
             <v-icon v-if="!$vuetify.breakpoint.xs">mdi-magnify</v-icon>
-            <v-form ref="form" v-on:submit.prevent="() => $emit('globalSearchSubmitted', globalSearch)"
+            <v-btn icon v-else  @click="showSearch = !showSearch; showNotifications = false">
+                <v-icon>mdi-magnify</v-icon>
+            </v-btn>
+            <v-form ref="form"
                     style="position: relative; bottom: 0; top: 10px; width: 200px; display: flex"
                     v-if="!$vuetify.breakpoint.xs"
             >
@@ -70,13 +73,23 @@
 <!--            </v-menu>-->
         </v-app-bar>
         <v-card
-                class="mx-auto pa-0 pt-1"
-                max-width="400"
+                class="mx-auto pa-0"
+                max-width= 400;
                 tile
                 fixed
                 id="searchMenu"
                 v-if="showSearch"
         >
+            <v-form ref="form"
+                    style="position: relative; bottom: 0; top: 10px; left: 10px; max-width: 370px; min-width: 360px"
+                    v-if="$vuetify.breakpoint.xs"
+            >
+                <v-text-field required placeholder="Search e.g. augmented reality"
+                              v-model="globalSearch" class="pa-1" style="font-size: small"
+                              @change="showSearch = true"
+                >
+                </v-text-field>
+            </v-form>
             <template v-for="result in searchResults">
                 <v-list-item two-line :href="'https://intra.proekspert.ee/'+result.url" target="_blank" :key="result.key">
                     <v-list-item-content>
@@ -208,7 +221,7 @@
         position: fixed;
         z-index: 3;
         right: 0;
-        top: 50px;
+        top: 48px;
         min-width: 300px;
     }
 
