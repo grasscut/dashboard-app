@@ -146,13 +146,8 @@
             showBadge: false
         }),
         mounted: function() {
-            axios
-                .get('/rest/recentlyviewed/1.0/recent?limit=8')
-                .then(({ data }) => {
-                    this.recentSearch = data;
-                    this.searchResults = data;
-                });
 
+            this.getRecentlyViewed();
             axios
                 .get('/rest/mywork/latest/status/notification/count')
                 .then((res) => {
@@ -161,6 +156,10 @@
         },
         watch: {
             globalSearch: function (val) {
+                if (val.length == 0) {
+                    this.getRecentlyViewed();
+                }
+                else if (val.length > 2) {
                 this.showSearch = true;
                 axios
                     .get('/rest/quicknav/1/search?query='+val)
@@ -189,12 +188,24 @@
                             this.searchResults = this.recentSearch;
                         }
                     });
+                }
+                else {
+                    this.showSearch = false;
+                }
             },
             notificationCount: function () {
                 this.showBadge = this.notificationCount > 0;
             }
         },
         methods: {
+            getRecentlyViewed: function () {
+                axios
+                    .get('/rest/recentlyviewed/1.0/recent?limit=8')
+                    .then(({ data }) => {
+                        this.recentSearch = data;
+                        this.searchResults = data;
+                    });
+            },
             getNotifications: function () {
                 if(!this.showNotifications){
                     this.showSearch = false;
