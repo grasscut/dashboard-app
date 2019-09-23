@@ -4,7 +4,8 @@
             <h4>Teams / Projects</h4>
         </v-card-title>
         <v-card-text style="overflow-y: auto; ">
-            <v-list three-line>
+            <div v-if="events.length == 0" style="margin: 60% 15%; width: 70%"> Currently there are no openings</div>
+            <v-list v-else three-line>
                 <template v-for="item in events">
                     <v-subheader
                             v-if="item.header"

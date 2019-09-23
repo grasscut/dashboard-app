@@ -106,12 +106,9 @@
     export default {
         name: "AppBar",
         data: () => ({
-            // showSearch: false,
             showNotifications: false,
-            // searchResults: [],
             notificationResults: [],
             globalSearch: '',
-            // recentSearch: [],
             notificationCount: 0,
             showBadge: false
         }),
