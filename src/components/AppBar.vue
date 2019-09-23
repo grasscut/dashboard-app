@@ -35,9 +35,9 @@
 
             <v-btn icon @click="getNotifications">
                 <v-badge
-                        :bottom="bottom"
+                        bottom="bottom"
                         color="teal"
-                        :left="left"
+                        left="left"
                         overlap
                         class="align-self-center"
                         :value=showBadge
@@ -90,10 +90,15 @@
                 >
                 </v-text-field>
             </v-form>
-            <template v-for="result in searchResults">
+            <template v-for="result in searchResults" style="overflow-y: auto">
                 <v-list-item two-line :href="'https://intra.proekspert.ee/'+result.url" target="_blank" :key="result.key">
                     <v-list-item-content>
-                        <v-list-item-title>{{ result.title }}</v-list-item-title>
+                        <v-list-item-title>
+                            <span>
+                                <v-icon class="mr-2" :style="'color: '+getSearchResultIcon(result.class).color">{{ getSearchResultIcon(result.class).icon }}</v-icon>
+                            </span>
+                            {{ result.title }}
+                        </v-list-item-title>
                         <v-list-item-subtitle>{{ result.space }}</v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
@@ -162,17 +167,20 @@
                     .then(({ data }) => {
                         if(data.contentNameMatches.length > 0) {
                             let results = [];
-                            const matches = data.contentNameMatches[0];
-                            for(let i in matches){
-                                let classname = matches[i].className;
-                                if("search-for" !== classname) {
-                                    let res = {
-                                        title: matches[i].name,
-                                        space: matches[i].spaceName,
-                                        key: matches[i].spaceKey,
-                                        url: matches[i].href
+                            for (let index in data.contentNameMatches){
+                                const matches = data.contentNameMatches[index];
+                                for(let i in matches){
+                                    let classname = matches[i].className;
+                                    if("search-for" !== classname) {
+                                        let res = {
+                                            title: matches[i].name,
+                                            space: matches[i].spaceName,
+                                            key: matches[i].href,
+                                            url: matches[i].href,
+                                            class: matches[i].className
+                                        };
+                                        results.push(res);
                                     }
-                                    results.push(res);
                                 }
                             }
                             this.searchResults = results;
@@ -209,6 +217,62 @@
                 }
                 else this.showNotifications = false;
             },
+            getSearchResultIcon: function (className) {
+                if(className === 'content-type-page') {
+                    return {
+                        icon:'mdi-book-open-page-variant',
+                        color: 'cornflowerblue'
+                    };
+                }
+                else if (className === 'content-type-attachment-html') {
+                    return {
+                        icon:'mdi-application',
+                        color: 'indianred'
+                    };
+                }
+                else if (className === 'content-type-attachment-pdf') {
+                    return {
+                        icon:'mdi-file-pdf-outline',
+                        color: 'indianred'
+                    };
+                }
+                else if (className === 'content-type-attachment-powerpoint') {
+                    return {
+                        icon:'mdi-office',
+                        color: 'indianred'
+                    };
+                }
+                else if (className === 'content-type-attachment-image') {
+                    return {
+                        icon:'mdi-file-image-outline',
+                        color: 'indianred'
+                    };
+                }
+                else if (className === 'content-type-spacedesc') {
+                    return {
+                        icon:'mdi-folder-outline',
+                        color: 'darkorchid'
+                    };
+                }
+                else if (className === 'content-type-userinfo') {
+                    return {
+                        icon:'mdi-account',
+                        color: 'cadetblue'
+                    };
+                }
+                else if (className === 'calendar-item') {
+                    return {
+                        icon:'mdi-calendar-month-outline',
+                        color: 'chocolate'
+                    };
+                }
+                else {
+                    return {
+                        icon:'mdi-file-document-box-outline',
+                        color: 'darkblue'
+                    };
+                }
+            },
             moment: function (date) {
                 return moment(date);
             },
@@ -220,10 +284,12 @@
 
     #searchMenu, #notificationMenu {
         position: fixed;
-        z-index: 3;
+        z-index: 5;
         right: 0;
-        top: 48px;
+        top: 49px;
         min-width: 300px;
+        overflow-y: auto;
+        max-height: 80%;
     }
 
     .app-bar {
