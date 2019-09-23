@@ -74,7 +74,7 @@
         </v-app-bar>
         <v-card
                 class="mx-auto pa-0"
-                max-width= 400;
+                :max-width="$vuetify.breakpoint.xs ? 'auto' : '350px'"
                 tile
                 fixed
                 id="searchMenu"
