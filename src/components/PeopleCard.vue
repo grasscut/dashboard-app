@@ -9,7 +9,10 @@
         <v-tab @click="searchResults = []">Vacations</v-tab>
 
         <v-tab-item>
-          <people-feed @searchSubmitted="(search) => submitSearch(search)"></people-feed>
+          <people-feed
+                  @searchSubmitted="(search) => submitSearch(search)"
+                  @dynamicSearch="(search) => filterSearch(search)"
+          ></people-feed>
         </v-tab-item>
         <v-tab-item>
           <vacations></vacations>
@@ -29,7 +32,9 @@
               <span>{{ person.position }} @ {{ person.team }}</span>
               <v-row style="white-space: nowrap; line-height: 1.5;">
                 <v-col :class="$vuetify.breakpoint.xs ? 'pb-0' : ''">
-                  <v-icon small left>mdi-domain</v-icon>{{ person.office }}<br />
+                  <v-icon small left>mdi-domain</v-icon>
+                  <a :href="`https://intra.proekspert.ee/jkeskus/locations?id=${person.id}`" target="_blank" style="text-decoration: none">{{ person.office }}</a><br />
+                  <br />
                   <span v-if="!!person.phone">
                     <v-icon small left>mdi-phone-outline</v-icon>
                     <a :href="`tel:${person.phone}`">{{ person.phone }}</a><br />
@@ -85,6 +90,9 @@ export default {
   methods: {
     moment: function (date) {
       return moment(date);
+    },
+    filterSearch: function(search) {
+      search.length !== 0 ? this.submitSearch(search) : this.searchResults = [];
     },
     submitSearch: function(search) {
       this.searchResults = [];
