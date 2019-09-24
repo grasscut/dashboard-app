@@ -11,10 +11,10 @@
                 allowfullscreen
                 :src="'http://www.youtube.com/embed/'+this.videoId"
         />
-        <v-row style="overflow-y: auto">
+        <v-row style="overflow-y: auto; margin-top: 10px">
             <template  v-for="video in this.videos">
                 <v-col cols="6" sm="6" md="6" lg="4" xl="4" :key="video.id">
-                    <v-card class="d-flex flex-column pa-0"
+                    <v-card class="d-flex flex-column pa-0 pt-1"
                             flat
                             @click="videoId = video.id">
                             <v-img class="white--text pa-0"
