@@ -1,7 +1,6 @@
 <template>
   <div>
     <!-- Type filters -->
-    <v-divider class="mt-2"></v-divider>
     <v-chip-group multiple show-arrows active-class="primary--text">
       <v-chip v-for="type in types" :key="type" @click="changeFilter(type)" color="white">
         <v-icon left>{{ getEventIcon(type) }}</v-icon>
@@ -22,7 +21,7 @@
           <v-card flat class="pa-0" style="overflow-x: auto;">
             <v-card-text class="d-flex pa-0">
               <template v-for="item in items">
-                <span v-if="item.type === 'noEventsToday'" :key="item.date + '.' + 'noEvents'" v-show="items.length === 1" style="height: 98px;">Today is just a normal day.</span>
+                <span v-if="item.type === 'noEventsToday'" :key="item.date + '.' + 'noEvents'" v-show="items.length === 1" style="height: 98px; padding-top: 25px; margin: 0 auto;">Today is just a normal day.</span>
                 <div v-else :key="item.type + item.person.username + item.date + item.title" class="mr-6">
                   <v-badge :color="getEventColor(item.type)" right bottom overlap>
                     <template v-slot:badge>
@@ -183,7 +182,7 @@
       },
       scrollToToday: function() {
         if (document.getElementById('today')) {
-          this.$vuetify.goTo('#today', { container: '#eventsContainer', offset: 276 });
+          this.$vuetify.goTo('#today', { container: '#eventsContainer', offset: 270 });
           this.shouldScrollToToday = false;
         }
       },
@@ -235,7 +234,7 @@
         this.scrollToToday();
       }
       if (this.handleFutureLoad) {
-        this.$vuetify.goTo('#topScrollPosition', { container: '#eventsContainer', offset: 322, duration: 0 });
+        this.$vuetify.goTo('#topScrollPosition', { container: '#eventsContainer', offset: 313, duration: 0 });
         this.handleFutureLoad = false;
       }
     }

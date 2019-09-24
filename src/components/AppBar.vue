@@ -17,17 +17,28 @@
             <div class="flex-grow-1"></div>
 
             <!-- Search -->
-            <v-icon v-if="!$vuetify.breakpoint.xs">mdi-magnify</v-icon>
-            <v-btn icon v-else  @click="$store.state.showSearchResults = !$store.state.showSearchResults; showNotifications = false">
-                <v-icon>mdi-magnify</v-icon>
-            </v-btn>
+            <template v-if="!$store.state.showSearchResults">
+                <v-icon v-if="!$vuetify.breakpoint.xs" >mdi-magnify</v-icon>
+                <v-btn icon v-else  @click="$store.state.showSearchResults = !$store.state.showSearchResults; showNotifications = false">
+                    <v-icon>mdi-magnify</v-icon>
+                </v-btn>
+            </template>
+            <template v-else>
+<!--                <v-btn icon v-if="!$vuetify.breakpoint.xs" >-->
+<!--                    <v-icon>mdi-close</v-icon>-->
+<!--                </v-btn>-->
+                <v-btn icon @click="$store.state.showSearchResults = false; showNotifications = false;">
+                    <v-icon>mdi-close</v-icon>
+                </v-btn>
+            </template>
             <v-form ref="form"
                     style="position: relative; bottom: 0; top: 10px; width: 200px; display: flex"
                     v-if="!$vuetify.breakpoint.xs"
+                    v-on:submit.prevent
             >
                 <v-text-field required placeholder="Search e.g. augmented reality"
                               v-model="globalSearch" class="pa-0 pl-1" style="font-size: small"
-                              @click="$store.state.showSearchResults = !$store.state.showSearchResults; showNotifications = false"
+                              @click="$store.state.showSearchResults = true; showNotifications = false"
                               @change="$store.state.showSearchResults = true"
                 >
                 </v-text-field>
@@ -46,7 +57,7 @@
                     <template v-slot:badge>
                         <span>{{ notificationCount }}</span>
                     </template>
-                    <v-icon>mdi-bell</v-icon>
+                    <v-icon :style="showNotifications ? 'color: teal':'color: currentColor'">mdi-bell</v-icon>
                 </v-badge>
             </v-btn>
 

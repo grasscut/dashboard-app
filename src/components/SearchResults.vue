@@ -88,9 +88,6 @@
                             }
                         });
                 }
-                else {
-                    this.$store.state.showSearchResults = false;
-                }
             },
         },
         methods: {
