@@ -11,6 +11,7 @@
 
     <!-- Events -->
     <v-chip v-if="events.length > 0" id="scrollToToday" @click="scrollToToday" class="mt-2">Scroll to today</v-chip>
+    <shadow-div bottom="245" width="93" top="45" index="1" bgClass="desc"></shadow-div>
     <div id="eventsContainer" style="height: 220px; overflow-y: auto; overflow-x: hidden; padding-top: 40px;">
       <v-progress-circular v-if="events.length === 0" class="progressSpinner" indeterminate></v-progress-circular>
       <v-btn v-if="events.length > 0" text width="100%" @click="() => loadMore(true)" :loading="futureLoadProgress">Load more</v-btn>
@@ -48,7 +49,8 @@
           </v-card>
         </div>
       </template>
-      <v-btn v-if="events.length > 0" text width="100%" @click="() => loadMore()" :loading="pastLoadProgress">Load more</v-btn>
+      <v-btn v-if="events.length > 0" text width="100%" @click="() => loadMore()" :loading="pastLoadProgress" style="z-index: 1">Load more</v-btn>
+      <shadow-div bottom="30" width="93" top="225" index="0" bgClass="asc"></shadow-div>
     </div>
 
     <!-- Search -->
@@ -66,6 +68,7 @@
   import axios from 'axios';
   import moment from 'moment';
   import { groupBy, getOrdinalNumber } from '../utils/helpers';
+  import ShadowDiv from "./ShadowDiv";
 
   moment.locale('en-gb');
   moment.locale('en-gb', {
@@ -80,6 +83,7 @@
   });
 
   export default {
+
     data: () => ({
       types: ['birthday', 'workbirthday', 'kudos', 'startdate'],
       selectedTypes: [],
@@ -93,6 +97,9 @@
       pastLoadProgress: false,
       search: '',
     }),
+    components: {
+      ShadowDiv
+    },
     computed: {
       filteredEvents: function() {
         const filteredEvents = this.events.filter((event) => (
@@ -279,7 +286,7 @@
     left: 50%;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
-    z-index: 1;
+    z-index: 2;
     opacity: .8;
   }
 </style>
