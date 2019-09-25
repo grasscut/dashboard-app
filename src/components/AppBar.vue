@@ -5,12 +5,13 @@
                 dense
                 light
                 fixed
+                height="60"
         >
             <v-app-bar-nav-icon @click="() => $emit('menuClicked')" class="pa-2"></v-app-bar-nav-icon>
 
             <v-toolbar-title>
                 <a href="/">
-                    <v-img src="../assets/images/proekspert-logo.svg" class="pl-2" style="max-width: 150px; height: 19px; "></v-img>
+                    <v-img contain src="../assets/images/proekspert-logo.svg" class="pl-2" style="max-width: 150px; height: 19px; "></v-img>
                 </a>
             </v-toolbar-title>
 
@@ -171,11 +172,11 @@
 
 <style scoped>
 
-    #searchMenu, #notificationMenu {
+    #notificationMenu {
         position: fixed;
-        z-index: 5;
+        z-index: 4;
         right: 0;
-        top: 49px;
+        top: 60px;
         min-width: 300px;
         overflow-y: auto;
         max-height: 80%;
@@ -185,5 +186,9 @@
         z-index: 8;
     }
 
+    .v-toolbar {
+        webkit-box-shadow: 0px 0px 1px -1px rgba(0, 0, 0, 0.2), 0px 0px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 0px 0px rgba(0, 0, 0, 0.12);
+        box-shadow: 0px 0px 1px -1px rgba(0, 0, 0, 0.2), 0px 0px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 0px 0px rgba(0, 0, 0, 0.12);
+    }
 
 </style>

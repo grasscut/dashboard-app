@@ -169,9 +169,9 @@
 
     #searchMenu {
         position: fixed;
-        z-index: 5;
+        z-index: 4;
         right: 0;
-        top: 49px;
+        top: 60px;
         min-width: 300px;
         overflow-y: auto;
         max-height: 80%;
