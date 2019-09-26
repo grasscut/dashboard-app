@@ -19,10 +19,16 @@
     <v-content>
       <v-container fluid :pa-0="$vuetify.breakpoint.smAndDown" style="max-width: 2000px; margin: 48px auto 0 auto">
         <v-row dense>
-          <v-col sm="6" md="4">
+          <v-col sm="6" md="6">
             <people-card></people-card>
           </v-col>
-          <v-col sm="6" md="4">
+          <v-col sm="6" md="6">
+            <v-img contain
+                   height="488"
+                   src="./assets/images/pro.png"
+            ></v-img>
+          </v-col>
+          <v-col sm="12" md="12">
             <news-feed-card></news-feed-card>
           </v-col>
           <v-col sm="6" md="4">
@@ -105,6 +111,10 @@ export default {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     line-height: 1.4 !important;
+  }
+
+  .container {
+    background-color: #FFFFFF;
   }
 
 </style>

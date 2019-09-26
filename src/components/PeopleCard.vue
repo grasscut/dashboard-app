@@ -1,5 +1,9 @@
 <template>
-  <v-card min-height="488" class="mb-2">
+  <v-card
+          min-height="488"
+          class="mb-2"
+          flat
+  >
     <v-card-title>
       <h4>People</h4>
     </v-card-title>
