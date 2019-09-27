@@ -1,35 +1,37 @@
 <template>
-    <v-card class="mb-2 d-flex flex-column" height="688">
+    <v-card class="mb-2" flat>
         <v-card-title>
             <h4>ProTube</h4>
         </v-card-title>
-
-        <iframe
-                height="500"
-                frameborder="0"
-                style="max-width: 650px"
-                allowfullscreen
-                :src="'http://www.youtube.com/embed/'+this.videoId"
-        />
-        <v-row style="overflow-y: auto; margin-top: 10px">
-            <template  v-for="video in this.videos">
-                <v-col cols="6" sm="6" md="6" lg="4" xl="4" :key="video.id">
-                    <v-card class="d-flex flex-column pa-0 pt-1"
-                            flat
-                            @click="videoId = video.id">
+        <v-row>
+            <v-col md="12" lg="8">
+                <iframe
+                        height="500"
+                        frameborder="0"
+                        style="max-width: 750px; width: inherit"
+                        allowfullscreen
+                        :src="'http://www.youtube.com/embed/'+this.videoId"
+                />
+                <span class="caption">{{ video_views }} views</span>
+                <span class="caption">{{ moment( video_date).calendar() }}</span>
+            </v-col>
+            <v-col lg="4">
+                <template  v-for="video in this.videos">
+                    <v-col :key="video.id" class="pa-0" >
+                        <v-card flat
+                                style="display: flex; padding: 0"
+                                @click="videoId = video.id; video_views = video.views; video_date = video.date">
                             <v-img class="white--text pa-0"
-                                   xl="4"
-                                   style="max-height: 300px"
+                                   style="height: 120px; width: 280px"
                                    :src="'http:///img.youtube.com/vi/'+video.id+'/0.jpg'">
                             </v-img>
-                            <v-card-text class="subtitle-1">
-                            <p class="ellipsis-2 font-weight-bold">{{ video.title }}</p>
+                            <v-card-text lg="6" class="subtitle-1">
+                                <p class="ellipsis-2 font-weight-bold">{{ video.title }}</p>
                             </v-card-text>
-                            <span class="caption">{{ video.views }} views</span>
-                            <span class="caption">{{ moment( video.date).calendar() }}</span>
-                    </v-card>
-                </v-col>
-            </template>
+                        </v-card>
+                    </v-col>
+                </template>
+            </v-col>
         </v-row>
     </v-card>
 </template>
@@ -40,6 +42,8 @@
         name: "TeamsProjectsCard",
         data: () => ({
             videoId:'x-ISMhDsLGA',
+            video_views: 123,
+            video_date: "2019-08-27",
             videos:[
                 {
                     id:"x-ISMhDsLGA",

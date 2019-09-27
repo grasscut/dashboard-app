@@ -10,7 +10,7 @@
         <v-img contain
                height="180"
                class="pa-0"
-                src="../assets/images/placeholder.png"
+                src="../../assets/images/placeholder.png"
         ></v-img>
         <v-card-text class="subtitle-1 black--text" >
             <span class="ellipsis-2 font-weight-bold"> {{ post.items[0].title }}</span>
@@ -26,7 +26,7 @@
 
 <script>
 
-    import moment from '../utils/moment';
+    import moment from '../../utils/moment';
     export default {
         props: ['post'],
         methods: {

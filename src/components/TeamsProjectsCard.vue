@@ -1,5 +1,6 @@
 <template>
-    <v-card class="mb-2 d-flex flex-column" height="488">
+    <v-card class="mb-2 d-flex flex-column"
+            :height="$vuetify.breakpoint.smAndDown? auto: 488" flat>
         <v-card-title>
             <h4>Teams / Projects</h4>
         </v-card-title>

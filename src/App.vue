@@ -1,28 +1,14 @@
 <template>
-  <v-app>
-<!--    <v-app-bar app>-->
-<!--      <v-toolbar-title class="headline text-uppercase">-->
-<!--        <span>Vuetify</span>-->
-<!--        <span class="font-weight-light">MATERIAL DESIGN</span>-->
-<!--      </v-toolbar-title>-->
-<!--      <v-spacer></v-spacer>-->
-<!--      <v-btn-->
-<!--        text-->
-<!--        href="https://github.com/vuetifyjs/vuetify/releases/latest"-->
-<!--        target="_blank"-->
-<!--      >-->
-<!--        <span class="mr-2">Latest Release</span>-->
-<!--      </v-btn>-->
-<!--    </v-app-bar>-->
+  <v-app style="background-color: #FFFFFF">
     <app-bar @menuClicked="showMenu = !showMenu"></app-bar>
     <menu-drawer :showMenu="showMenu"></menu-drawer>
     <v-content>
-      <v-container fluid :pa-0="$vuetify.breakpoint.smAndDown" style="max-width: 2000px; margin: 48px auto 0 auto">
+      <v-container fluid :pa-0="$vuetify.breakpoint.smAndDown" style="max-width: 2000px; margin: 48px auto 0 auto; width: 80%">
         <v-row dense>
-          <v-col sm="6" md="6">
+          <v-col sm="12" md="6">
             <people-card></people-card>
           </v-col>
-          <v-col sm="6" md="6">
+          <v-col md="6" v-if="!$vuetify.breakpoint.smAndDown">
             <v-img contain
                    height="488"
                    src="./assets/images/pro.png"
@@ -31,31 +17,29 @@
           <v-col sm="12" md="12">
             <news-feed-card></news-feed-card>
           </v-col>
-          <v-col sm="6" md="4">
+          <v-col sm="12" md="6">
             <teams-projects-card></teams-projects-card>
           </v-col>
-          <v-col sm="6" md="4">
-            <blog-card></blog-card>
-          </v-col>
-          <v-col sm="6" md="4">
-            <protube-card></protube-card>
-          </v-col>
-          <v-col sm="6" md="4">
+          <v-col sm="12" md="6">
             <wiki-feed-card></wiki-feed-card>
           </v-col>
-          <v-col cols="12">
-            <services-card></services-card>
+          <v-col sm="12" md="12">
+            <blog-card></blog-card>
+          </v-col>
+          <v-col sm="12" md="12">
+            <protube-card></protube-card>
           </v-col>
         </v-row>
       </v-container>
     </v-content>
+    <services-card></services-card>
   </v-app>
 </template>
 
 <script>
 import PeopleCard from './components/PeopleCard';
 import WikiFeedCard from './components/WikiFeedCard';
-import BlogCard from './components/BlogCard';
+import BlogCard from './components/blog/BlogCard';
 import ServicesCard from './components/ServicesCard';
 import NewsFeedCard from "./components/NewsFeedCard";
 import TeamsProjectsCard from "./components/TeamsProjectsCard";

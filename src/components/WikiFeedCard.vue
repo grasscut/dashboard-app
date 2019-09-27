@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mb-2 d-flex flex-column" height="688" >
+  <v-card class="mb-2 d-flex flex-column" height="488" flat>
     <v-card-title>
       <h4>Wiki feed</h4>
     </v-card-title>
