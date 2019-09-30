@@ -5,11 +5,22 @@
                 style="height: auto"
         >
             <slide  v-for="post in posts" :key="post.url">
-                <v-card flat height="450" :href="post.url" target="_blank">
+                <v-card
+                        flat
+                        height="450"
+                        :href="post.url"
+                        target="_blank"
+                        @click="() => $emit(post.clickAction, post)"
+                >
                     <no-image v-if="!post.image"></no-image>
-                    <v-img :src="'https://intra.proekspert.ee/'+ post.image"
-                           :height="$vuetify.breakpoint.smAndDown ? 250 : 300"
-                           v-else></v-img>
+                    <template v-else>
+                        <v-img :src="'https://intra.proekspert.ee/'+ post.image"
+                               :height="$vuetify.breakpoint.smAndDown ? 250 : 300"
+                               v-if="!post.rawUrl"></v-img>
+                        <v-img :src="post.image"
+                               :height="$vuetify.breakpoint.smAndDown ? 200 : 250"
+                               v-else></v-img>
+                    </template>
                     <v-card-text class="title">
                         <span class="ellipsis-2">{{ post.title }}</span>
                         <span class="caption" v-if="post.author"> {{'by ' + post.author }}</span>
@@ -67,7 +78,7 @@
                 }
             }
         }),
-        props: ['posts'],
+        props: ['posts', 'config'],
         components: {
             Hooper,
             Slide,
@@ -83,7 +94,7 @@
             slideNext() {
                 this.$refs.carousel.slideNext();
             },
-        }
+        },
     };
 </script>
 

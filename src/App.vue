@@ -61,7 +61,7 @@ export default {
     AppBar,
   },
   mounted() {
-    document.cookie = "crowd.token_key=hll3DImF1COGT3JoMeijPQ00";
+    document.cookie = "crowd.token_key=c5QMyoRZeBnwbx9Xu1dYdA00";
   },
   data: () => ({
     showMenu: false,

@@ -2,11 +2,11 @@
   <v-card class="mb-2 d-flex flex-column" height="600" flat>
     <v-card-title>
       <h4>Blog</h4>
+      <v-btn v-if="posts.length > 0" text width="100%" @click="loadMore" :loading="loadMoreProgress" class="justify-end">Load more</v-btn>
     </v-card-title>
     <slider :posts="blogPosts"></slider>
     <v-card-text style="overflow-y: auto; overflow-x: hidden;">
       <v-progress-circular v-if="posts.length === 0" indeterminate class="progressSpinner"></v-progress-circular>
-      <v-btn v-if="posts.length > 0" text width="100%" @click="loadMore" :loading="loadMoreProgress">Load more</v-btn>
     </v-card-text>
   </v-card>
 </template>
@@ -23,7 +23,7 @@
       posts: [],
       nextPageUrl: '',
       loadMoreProgress: false,
-      fetchNumber: 6
+      fetchNumber: 6,
     }),
     computed: {
       blogPosts() {
